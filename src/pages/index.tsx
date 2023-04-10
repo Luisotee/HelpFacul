@@ -4,13 +4,14 @@ import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { DarkTheme } from "@/components/darktheme";
 import { HeaderMegaMenu } from "@/components/top-bar";
+import { LoginPage } from "@/components/login-page";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
     <>
-      <HeaderMegaMenu />
+      <LoginPage />
     </>
   );
 }
