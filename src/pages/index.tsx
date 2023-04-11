@@ -7,8 +7,8 @@ import { Center, Group } from "@mantine/core";
 export default function Home() {
   return (
     <>
-      <DarkTheme />
-      <Group spacing={50} position="center" p="xl">
+      <TopBar />
+      {/*<Group spacing={50} position="center" p="xl">
         <TeacherCard
           avatar="https://avatars.githubusercontent.com/u/50471205?v=4"
           name="Luis"
@@ -33,7 +33,7 @@ export default function Home() {
           university="Facens"
           subject="Matematica"
         />
-      </Group>
+  </Group>*/}
     </>
   );
 }
