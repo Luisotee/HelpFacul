@@ -23,6 +23,7 @@ export function TeacherCard({
         backgroundColor:
           theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
       })}
+      style={{ borderColor: "lightgray" }}
     >
       <Avatar src={avatar} size={140} radius={120} mx="auto" />
       <Text ta="center" fz="xl" weight={500} mt="md">

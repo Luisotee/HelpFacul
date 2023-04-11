@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <TopBar />
-      {/*<Group spacing={50} position="center" p="xl">
+      <Group spacing={50} p="xl" mx="xl" w="90%" position="apart">
         <TeacherCard
           avatar="https://avatars.githubusercontent.com/u/50471205?v=4"
           name="Luis"
@@ -33,7 +33,7 @@ export default function Home() {
           university="Facens"
           subject="Matematica"
         />
-  </Group>*/}
+      </Group>
     </>
   );
 }
