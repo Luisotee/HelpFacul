@@ -17,6 +17,7 @@ import {
   Collapse,
   ScrollArea,
   rem,
+  ActionIcon,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -28,6 +29,8 @@ import {
   IconCoin,
   IconChevronDown,
 } from "@tabler/icons-react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { Book } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
@@ -138,6 +141,18 @@ export function TopBar() {
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
 
+  const router = useRouter();
+
+  function handleClickLogin(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    router.push("/login-page");
+  }
+
+  function handleClickHome(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    router.push("/");
+  }
+
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
       <Group noWrap align="flex-start">
@@ -160,7 +175,9 @@ export function TopBar() {
     <Box pb={120}>
       <Header height={60} px="md">
         <Group position="apart" sx={{ height: "100%" }}>
-          <Book size={30} />
+          <ActionIcon size="xl" onClick={handleClickHome}>
+            <Book size={30} />
+          </ActionIcon>
 
           <Group
             sx={{ height: "100%" }}
@@ -213,7 +230,9 @@ export function TopBar() {
           </Group>
 
           <Group className={classes.hiddenMobile}>
-            <Button variant="default">Log in</Button>
+            <Button variant="default" onClick={handleClickLogin}>
+              Log in
+            </Button>
             <Button>Sign up</Button>
           </Group>
 
