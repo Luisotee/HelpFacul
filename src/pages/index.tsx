@@ -38,12 +38,6 @@ export default function Home() {
           university="Facens"
           subject="Matematica"
         />
-        <TeacherCard
-          avatar="https://avatars.githubusercontent.com/u/50471205?v=4"
-          name="Luis"
-          university="Facens"
-          subject="Matematica"
-        />
       </Group>
     </>
   );

@@ -11,14 +11,8 @@ import {
   Group,
   Button,
 } from "@mantine/core";
-import router, { useRouter } from "next/router";
 
-export default function LoginPage() {
-  const router = useRouter();
-  function handleClickSignup(e: { preventDefault: () => void }) {
-    e.preventDefault();
-    router.push("/signup-page");
-  }
+export default function SignupPage() {
   return (
     <>
       <TopBar />
@@ -30,14 +24,8 @@ export default function LoginPage() {
             fontWeight: 900,
           })}
         >
-          Welcome back!
+          Welcome!
         </Title>
-        <Text color="dimmed" size="sm" align="center" mt={5}>
-          Do not have an account yet?{" "}
-          <Anchor size="sm" component="button" onClick={handleClickSignup}>
-            Create account
-          </Anchor>
-        </Text>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <TextInput label="Email" placeholder="you@mantine.dev" required />
           <PasswordInput
@@ -46,13 +34,14 @@ export default function LoginPage() {
             required
             mt="md"
           />
-          <Group position="apart" mt="lg">
-            <Anchor component="button" size="sm">
-              Forgot password?
-            </Anchor>
-          </Group>
+          <PasswordInput
+            label="Confirm Password"
+            placeholder="Your password"
+            required
+            mt="md"
+          />
           <Button fullWidth mt="xl">
-            Sign in
+            Sign up
           </Button>
         </Paper>
       </Container>

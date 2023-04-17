@@ -153,6 +153,11 @@ export function TopBar() {
     router.push("/");
   }
 
+  function handleClickSignup(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    router.push("/signup-page");
+  }
+
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
       <Group noWrap align="flex-start">
@@ -184,9 +189,13 @@ export function TopBar() {
             spacing={0}
             className={classes.hiddenMobile}
           >
-            <a href="#" className={classes.link}>
+            <Button
+              variant="subtle"
+              className={classes.link}
+              onClick={handleClickHome}
+            >
               Home
-            </a>
+            </Button>
             <HoverCard
               width={600}
               position="bottom"
@@ -233,7 +242,7 @@ export function TopBar() {
             <Button variant="default" onClick={handleClickLogin}>
               Log in
             </Button>
-            <Button>Sign up</Button>
+            <Button onClick={handleClickSignup}>Sign up</Button>
           </Group>
 
           <Burger
