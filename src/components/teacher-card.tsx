@@ -1,4 +1,5 @@
 import { Avatar, Text, Button, Paper, Badge } from "@mantine/core";
+import { useRouter } from "next/router";
 
 interface UserInfoActionProps {
   avatar: string;
@@ -13,6 +14,12 @@ export function TeacherCard({
   university,
   subject,
 }: UserInfoActionProps) {
+  const router = useRouter();
+
+  function handleClickDetail(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    router.push("/user-detail");
+  }
   return (
     <Paper
       radius="lg"
@@ -50,7 +57,7 @@ export function TeacherCard({
       <Text ta="center" mt="sm" fz="md" fw="bold">
         R$40/hr
       </Text>
-      <Button variant="default" fullWidth mt="md">
+      <Button variant="default" fullWidth mt="md" onClick={handleClickDetail}>
         Detalhes
       </Button>
     </Paper>
