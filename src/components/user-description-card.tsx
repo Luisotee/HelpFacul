@@ -9,10 +9,7 @@ export function UserDescriptionCard() {
         Localização
       </Title>
       <Text>Sorocaba, São Paulo</Text>
-      <Title order={3} mt="sm">
-        Idiomas
-      </Title>
-      <Text>PT-BR, english</Text>
+
       <Title order={3} mt="sm">
         Educação
       </Title>

@@ -177,7 +177,7 @@ export function TopBar() {
   ));
 
   return (
-    <Box pb={120}>
+    <Box pb={30}>
       <Header height={60} px="md">
         <Group position="apart" sx={{ height: "100%" }}>
           <ActionIcon size="xl" onClick={handleClickHome}>
