@@ -11,8 +11,32 @@ import {
   Group,
   Button,
 } from "@mantine/core";
+import { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../controller/firebase";
 
 export default function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function onSubmit() {
+    console.log("entrou");
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        alert("OPA");
+        // ..
+      });
+  }
+
   return (
     <>
       <TopBar />
@@ -27,10 +51,18 @@ export default function SignupPage() {
           Welcome!
         </Title>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput label="Email" placeholder="you@mantine.dev" required />
+          <TextInput
+            label="Email"
+            placeholder="you@mantine.dev"
+            value={email}
+            onChange={(event) => setEmail(event.currentTarget.value)}
+            required
+          />
           <PasswordInput
             label="Password"
             placeholder="Your password"
+            value={password}
+            onChange={(event) => setPassword(event.currentTarget.value)}
             required
             mt="md"
           />
@@ -40,7 +72,7 @@ export default function SignupPage() {
             required
             mt="md"
           />
-          <Button fullWidth mt="xl">
+          <Button fullWidth mt="xl" onClick={onSubmit}>
             Sign up
           </Button>
         </Paper>
