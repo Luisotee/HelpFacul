@@ -19,8 +19,21 @@ import { useState } from "react";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
 
   const router = useRouter();
+
+  function validateEmail(email: string) {
+    const re = /\S+@\S+\.\S+/;
+    setIsValidEmail(re.test(email));
+  }
+
+  function validatePassword(password: string) {
+    setIsValidPassword(password.length >= 6);
+  }
+
+  const isFormValid = isValidEmail && isValidPassword;
 
   function handleClickSignup(e: { preventDefault: () => void }) {
     e.preventDefault();
@@ -38,6 +51,7 @@ export default function LoginPage() {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        alert(errorCode);
       });
   }
 
@@ -65,14 +79,22 @@ export default function LoginPage() {
             label="Email"
             placeholder="you@mantine.dev"
             value={email}
-            onChange={(event) => setEmail(event.currentTarget.value)}
+            onChange={(event) => {
+              setEmail(event.currentTarget.value);
+              validateEmail(event.currentTarget.value);
+            }}
+            error={!isValidEmail}
             required
           />
           <PasswordInput
             label="Password"
             placeholder="Your password"
             value={password}
-            onChange={(event) => setPassword(event.currentTarget.value)}
+            onChange={(event) => {
+              setPassword(event.currentTarget.value);
+              validatePassword(event.currentTarget.value);
+            }}
+            error={!isValidPassword}
             required
             mt="md"
           />
@@ -81,7 +103,7 @@ export default function LoginPage() {
               Forgot password?
             </Anchor>
           </Group>
-          <Button fullWidth mt="xl" onClick={onSubmit}>
+          <Button fullWidth mt="xl" onClick={onSubmit} disabled={!isFormValid}>
             Sign in
           </Button>
         </Paper>

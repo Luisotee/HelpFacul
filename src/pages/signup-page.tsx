@@ -18,24 +18,39 @@ import { auth } from "../controller/firebase";
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
+
+  function validateEmail(email: string) {
+    const re = /\S+@\S+\.\S+/;
+    setIsValidEmail(re.test(email));
+  }
+
+  function validatePassword(password: string) {
+    setIsValidPassword(password.length >= 6);
+  }
+
+  function validateConfirmPassword(confirmPassword: string) {
+    setIsValidConfirmPassword(confirmPassword === password);
+  }
 
   async function onSubmit() {
-    console.log("entrou");
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         console.log(user);
-        // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        alert("OPA");
-        // ..
+        alert(errorCode);
       });
   }
+
+  const isFormValid = isValidEmail && isValidPassword && isValidConfirmPassword;
 
   return (
     <>
@@ -54,25 +69,41 @@ export default function SignupPage() {
           <TextInput
             label="Email"
             placeholder="you@mantine.dev"
+            description="Necessita email válido"
             value={email}
-            onChange={(event) => setEmail(event.currentTarget.value)}
+            onChange={(event) => {
+              setEmail(event.currentTarget.value);
+              validateEmail(event.currentTarget.value);
+            }}
             required
+            error={!isValidEmail}
           />
           <PasswordInput
             label="Password"
             placeholder="Your password"
+            description="Senha precisa ter mais de 6 caracteres"
             value={password}
-            onChange={(event) => setPassword(event.currentTarget.value)}
+            onChange={(event) => {
+              setPassword(event.currentTarget.value);
+              validatePassword(event.currentTarget.value);
+            }}
             required
+            error={!isValidPassword}
             mt="md"
           />
           <PasswordInput
             label="Confirm Password"
             placeholder="Your password"
+            value={confirmPassword}
+            onChange={(event) => {
+              setConfirmPassword(event.currentTarget.value);
+              validateConfirmPassword(event.currentTarget.value);
+            }}
             required
+            error={!isValidConfirmPassword}
             mt="md"
           />
-          <Button fullWidth mt="xl" onClick={onSubmit}>
+          <Button fullWidth mt="xl" onClick={onSubmit} disabled={!isFormValid}>
             Sign up
           </Button>
         </Paper>
