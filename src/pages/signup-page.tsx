@@ -14,6 +14,8 @@ import {
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../controller/firebase";
+import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -28,6 +30,8 @@ export default function SignupPage() {
     setIsValidEmail(re.test(email));
   }
 
+  const router = useRouter();
+
   function validatePassword(password: string) {
     setIsValidPassword(password.length >= 6);
   }
@@ -41,6 +45,8 @@ export default function SignupPage() {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        alert("Cadastro concluido! Faça o login na nova pagina.");
+        router.push("/login-page");
       })
       .catch((error) => {
         const errorCode = error.code;
