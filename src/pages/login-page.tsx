@@ -45,7 +45,11 @@ export default function LoginPage() {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
+        if (user.emailVerified) {
+          console.log(user);
+        } else {
+          alert("Please verify your email before logging in.");
+        }
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -12,7 +12,10 @@ import {
   Button,
 } from "@mantine/core";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth } from "../controller/firebase";
 import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/router";
@@ -42,10 +45,13 @@ export default function SignupPage() {
 
   async function onSubmit() {
     await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
+        await sendEmailVerification(userCredential.user);
         const user = userCredential.user;
         console.log(user);
-        alert("Cadastro concluido! Faça o login na nova pagina.");
+        alert(
+          "Cadastro concluido! Verifique seu email e faça o login na nova página."
+        );
         router.push("/login-page");
       })
       .catch((error) => {
