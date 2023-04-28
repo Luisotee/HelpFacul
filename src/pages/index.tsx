@@ -2,8 +2,14 @@ import { DarkTheme } from "@/components/darktheme";
 import { TeacherCard } from "@/components/teacher-card";
 import { TopBar } from "@/components/top-bar";
 import { Center, Group } from "@mantine/core";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  const { user } = router.query;
+
+  //console.log(user); // should output the stringified user object
+
   return (
     <>
       <TopBar />
