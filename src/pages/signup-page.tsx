@@ -16,9 +16,10 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { auth } from "../controller/firebase";
+
 import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/router";
+import { auth } from "@/controller/Firebase";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -48,7 +49,7 @@ export default function SignupPage() {
       .then(async (userCredential) => {
         await sendEmailVerification(userCredential.user);
         const user = userCredential.user;
-        console.log(user);
+        //console.log(user);
         alert(
           "Cadastro concluido! Verifique seu email e faça o login na nova página."
         );
@@ -57,7 +58,7 @@ export default function SignupPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        //console.log(errorCode, errorMessage);
         alert(errorCode);
       });
   }

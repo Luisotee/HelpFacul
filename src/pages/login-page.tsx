@@ -1,19 +1,18 @@
 import { TopBar } from "@/components/top-bar";
-import { auth } from "@/controller/firebase";
+import { auth } from "@/controller/Firebase";
 import {
-  TextInput,
-  PasswordInput,
-  Checkbox,
   Anchor,
-  Paper,
-  Title,
-  Text,
+  Button,
   Container,
   Group,
-  Button,
+  Paper,
+  PasswordInput,
+  Text,
+  TextInput,
+  Title,
 } from "@mantine/core";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -43,10 +42,11 @@ export default function LoginPage() {
   function onSubmit() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
+        const stringifiedUser = JSON.stringify(user);
         if (user.emailVerified) {
           console.log(user);
+          router.push("/");
         } else {
           alert("Please verify your email before logging in.");
         }
@@ -54,7 +54,7 @@ export default function LoginPage() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        //console.log(errorCode, errorMessage);
         alert(errorCode);
       });
   }

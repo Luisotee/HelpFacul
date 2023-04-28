@@ -1,139 +1,38 @@
+import { mockdata, useStyles } from "@/util/top-bar-style";
 import {
-  createStyles,
-  Header,
-  HoverCard,
-  Group,
-  Button,
-  UnstyledButton,
-  Text,
-  SimpleGrid,
-  ThemeIcon,
-  Anchor,
-  Divider,
-  Center,
+  ActionIcon,
   Box,
   Burger,
-  Drawer,
+  Button,
+  Center,
   Collapse,
+  Divider,
+  Drawer,
+  Group,
+  Header,
+  HoverCard,
   ScrollArea,
+  SimpleGrid,
+  Text,
+  ThemeIcon,
+  UnstyledButton,
   rem,
-  ActionIcon,
+  Avatar,
+  Menu,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  IconNotification,
-  IconCode,
-  IconBook,
-  IconChartPie3,
-  IconFingerprint,
-  IconCoin,
+  IconArrowsLeftRight,
   IconChevronDown,
+  IconMessageCircle,
+  IconPhoto,
+  IconSearch,
+  IconSettings,
+  IconTrash,
 } from "@tabler/icons-react";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { Book } from "tabler-icons-react";
-
-const useStyles = createStyles((theme) => ({
-  link: {
-    display: "flex",
-    alignItems: "center",
-    height: "100%",
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
-    textDecoration: "none",
-    color: theme.colorScheme === "dark" ? theme.white : theme.black,
-    fontWeight: 500,
-    fontSize: theme.fontSizes.sm,
-
-    [theme.fn.smallerThan("sm")]: {
-      height: rem(42),
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-    },
-
-    ...theme.fn.hover({
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
-    }),
-  },
-
-  subLink: {
-    width: "100%",
-    padding: `${theme.spacing.xs} ${theme.spacing.md}`,
-    borderRadius: theme.radius.md,
-
-    ...theme.fn.hover({
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[7]
-          : theme.colors.gray[0],
-    }),
-
-    "&:active": theme.activeStyles,
-  },
-
-  dropdownFooter: {
-    backgroundColor:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[7]
-        : theme.colors.gray[0],
-    margin: `calc(${theme.spacing.md} * -1)`,
-    marginTop: theme.spacing.sm,
-    padding: `${theme.spacing.md} calc(${theme.spacing.md} * 2)`,
-    paddingBottom: theme.spacing.xl,
-    borderTop: `${rem(1)} solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[1]
-    }`,
-  },
-
-  hiddenMobile: {
-    [theme.fn.smallerThan("sm")]: {
-      display: "none",
-    },
-  },
-
-  hiddenDesktop: {
-    [theme.fn.largerThan("sm")]: {
-      display: "none",
-    },
-  },
-}));
-
-const mockdata = [
-  {
-    icon: IconCode,
-    title: "Open source",
-    description: "This Pokémon’s cry is very loud and distracting",
-  },
-  {
-    icon: IconCoin,
-    title: "Free for everyone",
-    description: "The fluid of Smeargle’s tail secretions changes",
-  },
-  {
-    icon: IconBook,
-    title: "Documentation",
-    description: "Yanma is capable of seeing 360 degrees without",
-  },
-  {
-    icon: IconFingerprint,
-    title: "Security",
-    description: "The shell’s rounded shape and the grooves on its.",
-  },
-  {
-    icon: IconChartPie3,
-    title: "Analytics",
-    description: "This Pokémon uses its flying ability to quickly chase",
-  },
-  {
-    icon: IconNotification,
-    title: "Notifications",
-    description: "Combusken battles with the intensely hot flames it spews",
-  },
-];
+import { Ad2, Book, User } from "tabler-icons-react";
+import isLogged from "../controller/isLogged";
 
 export function TopBar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -142,6 +41,8 @@ export function TopBar() {
   const { classes, theme } = useStyles();
 
   const router = useRouter();
+  const user = isLogged();
+  console.log("TOPBAR USER: " + JSON.stringify(user));
 
   function handleClickLogin(e: { preventDefault: () => void }) {
     e.preventDefault();
@@ -238,12 +139,34 @@ export function TopBar() {
             </a>
           </Group>
 
-          <Group className={classes.hiddenMobile}>
-            <Button variant="default" onClick={handleClickLogin}>
-              Log in
-            </Button>
-            <Button onClick={handleClickSignup}>Sign up</Button>
-          </Group>
+          {user ? (
+            <Menu shadow="md" width={200}>
+              <Menu.Target>
+                <Button
+                  radius="xl"
+                  color={theme.colorScheme === "dark" ? "dark.5" : "gray.1"}
+                >
+                  <Avatar radius="xl" />
+                </Button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item icon={<User size={14} />}>Meu cadastro</Menu.Item>
+                <Menu.Item icon={<Ad2 size={14} />}>Meus anúncios</Menu.Item>
+                <Menu.Divider />
+                <Menu.Label>Zona de perigo</Menu.Label>
+                <Menu.Item color="red" icon={<IconTrash size={14} />}>
+                  Excluir conta
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          ) : (
+            <Group className={classes.hiddenMobile}>
+              <Button variant="default" onClick={handleClickLogin}>
+                Log in
+              </Button>
+              <Button onClick={handleClickSignup}>Sign up</Button>
+            </Group>
+          )}
 
           <Burger
             opened={drawerOpened}

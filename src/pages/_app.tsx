@@ -6,7 +6,6 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
-import { useHotkeys } from "@mantine/hooks/lib/use-hotkeys/use-hotkeys";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
