@@ -1,37 +1,12 @@
+import { createStyles, rem } from "@mantine/core";
 import {
-  createStyles,
-  Header,
-  HoverCard,
-  Group,
-  Button,
-  UnstyledButton,
-  Text,
-  SimpleGrid,
-  ThemeIcon,
-  Anchor,
-  Divider,
-  Center,
-  Box,
-  Burger,
-  Drawer,
-  Collapse,
-  ScrollArea,
-  rem,
-  ActionIcon,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import {
-  IconNotification,
-  IconCode,
-  IconBook,
-  IconChartPie3,
-  IconFingerprint,
-  IconCoin,
-  IconChevronDown,
-} from "@tabler/icons-react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Book } from "tabler-icons-react";
+  Atom,
+  Bolt,
+  ChartInfographic,
+  Cpu,
+  Database,
+  Math,
+} from "tabler-icons-react";
 
 export const useStyles = createStyles((theme) => ({
   link: {
@@ -104,33 +79,33 @@ export const useStyles = createStyles((theme) => ({
 
 export const mockdata = [
   {
-    icon: IconCode,
-    title: "Open source",
-    description: "This Pokémon’s cry is very loud and distracting",
+    icon: Math,
+    title: "Matemática",
+    description: "Aulas de matemática",
   },
   {
-    icon: IconCoin,
-    title: "Free for everyone",
-    description: "The fluid of Smeargle’s tail secretions changes",
+    icon: Atom,
+    title: "Química",
+    description: "Aulas de química",
   },
   {
-    icon: IconBook,
-    title: "Documentation",
-    description: "Yanma is capable of seeing 360 degrees without",
+    icon: ChartInfographic,
+    title: "Aulas de estatística",
+    description: "Aulas de estatística",
   },
   {
-    icon: IconFingerprint,
-    title: "Security",
-    description: "The shell’s rounded shape and the grooves on its.",
+    icon: Bolt,
+    title: "Elétrica",
+    description: "Aulas de estatística elétrica",
   },
   {
-    icon: IconChartPie3,
-    title: "Analytics",
-    description: "This Pokémon uses its flying ability to quickly chase",
+    icon: Cpu,
+    title: "Eletrônica",
+    description: "Aulas de estatística eletrônica",
   },
   {
-    icon: IconNotification,
-    title: "Notifications",
-    description: "Combusken battles with the intensely hot flames it spews",
+    icon: Database,
+    title: "Banco de dados",
+    description: "Aulas de estatística banco de dados",
   },
 ];

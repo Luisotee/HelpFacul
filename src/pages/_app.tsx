@@ -1,11 +1,11 @@
-import type { AppProps } from "next/app";
-import Head from "next/head";
 import {
   ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
+import type { AppProps } from "next/app";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({

@@ -1,12 +1,11 @@
-import { TopBar } from "@/components/top-bar";
+import { TopBar } from "@/components/topbar/top-bar";
 import {
-  Paper,
   Center,
-  TextInput,
-  Stack,
-  Textarea,
   MultiSelect,
   NumberInput,
+  Paper,
+  TextInput,
+  Textarea,
 } from "@mantine/core";
 
 const subjects = [
