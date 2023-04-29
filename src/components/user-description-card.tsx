@@ -1,4 +1,4 @@
-import { Card, Paper, Table, Text, Title } from "@mantine/core";
+import { Card, Text, Title } from "@mantine/core";
 
 export function UserDescriptionCard() {
   return (

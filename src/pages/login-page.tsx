@@ -1,5 +1,6 @@
-import { TopBar } from "@/components/top-bar";
+import { TopBar } from "@/components/topbar/top-bar";
 import { auth } from "@/controller/Firebase";
+import isLogged from "@/controller/isLogged";
 import {
   Anchor,
   Button,
@@ -22,6 +23,15 @@ export default function LoginPage() {
   const [isValidPassword, setIsValidPassword] = useState(false);
 
   const router = useRouter();
+
+  const isUser = isLogged();
+
+  if (isUser) {
+    console.log("Usúario já está logado!");
+    router.push("/");
+    alert("Usúario já está logado!");
+    return null;
+  }
 
   function validateEmail(email: string) {
     const re = /\S+@\S+\.\S+/;
@@ -70,18 +80,18 @@ export default function LoginPage() {
             fontWeight: 900,
           })}
         >
-          Welcome back!
+          Bem-vindo de volta!
         </Title>
         <Text color="dimmed" size="sm" align="center" mt={5}>
-          Do not have an account yet?{" "}
+          Ainda não tem uma conta?{" "}
           <Anchor size="sm" component="button" onClick={handleClickSignup}>
-            Create account
+            Crie uma nova conta
           </Anchor>
         </Text>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="voce@gmail.com"
             value={email}
             onChange={(event) => {
               setEmail(event.currentTarget.value);
@@ -91,8 +101,8 @@ export default function LoginPage() {
             required
           />
           <PasswordInput
-            label="Password"
-            placeholder="Your password"
+            label="Senha"
+            placeholder="Sua senha"
             value={password}
             onChange={(event) => {
               setPassword(event.currentTarget.value);
@@ -104,11 +114,11 @@ export default function LoginPage() {
           />
           <Group position="apart" mt="lg">
             <Anchor component="button" size="sm">
-              Forgot password?
+              Esqueceu sua senha?
             </Anchor>
           </Group>
           <Button fullWidth mt="xl" onClick={onSubmit} disabled={!isFormValid}>
-            Sign in
+            Login
           </Button>
         </Paper>
       </Container>

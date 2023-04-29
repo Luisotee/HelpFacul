@@ -1,4 +1,4 @@
-import { Avatar, Text, Button, Paper, Badge } from "@mantine/core";
+import { Avatar, Badge, Button, Paper, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 
 interface UserInfoActionProps {

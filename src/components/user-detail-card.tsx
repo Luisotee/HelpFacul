@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Badge,
-  Card,
-  Center,
-  Group,
-  Image,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Avatar, Badge, Card, Image, Text, Title } from "@mantine/core";
 
 export function UserDetailCard() {
   return (

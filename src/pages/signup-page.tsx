@@ -1,25 +1,21 @@
-import { TopBar } from "@/components/top-bar";
+import { TopBar } from "@/components/topbar/top-bar";
 import {
-  TextInput,
-  PasswordInput,
-  Checkbox,
-  Anchor,
-  Paper,
-  Title,
-  Text,
-  Container,
-  Group,
   Button,
+  Container,
+  Paper,
+  PasswordInput,
+  TextInput,
+  Title,
 } from "@mantine/core";
-import { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
+import { useState } from "react";
 
-import { useNavigate } from "react-router-dom";
-import { useRouter } from "next/router";
 import { auth } from "@/controller/Firebase";
+import isLogged from "@/controller/isLogged";
+import { useRouter } from "next/router";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -29,12 +25,21 @@ export default function SignupPage() {
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
 
+  const router = useRouter();
+
+  const isUser = isLogged();
+
+  if (isUser) {
+    console.log("Usúario já está logado!");
+    router.push("/");
+    alert("Usúario já está logado!");
+    return null;
+  }
+
   function validateEmail(email: string) {
     const re = /\S+@\S+\.\S+/;
     setIsValidEmail(re.test(email));
   }
-
-  const router = useRouter();
 
   function validatePassword(password: string) {
     setIsValidPassword(password.length >= 6);
@@ -76,12 +81,12 @@ export default function SignupPage() {
             fontWeight: 900,
           })}
         >
-          Welcome!
+          Bem-vindo!
         </Title>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="voce@gmail.com"
             description="Necessita email válido"
             value={email}
             onChange={(event) => {
@@ -92,8 +97,8 @@ export default function SignupPage() {
             error={!isValidEmail}
           />
           <PasswordInput
-            label="Password"
-            placeholder="Your password"
+            label="Senha"
+            placeholder="Sua senha"
             description="Senha precisa ter mais de 6 caracteres"
             value={password}
             onChange={(event) => {
@@ -105,8 +110,8 @@ export default function SignupPage() {
             mt="md"
           />
           <PasswordInput
-            label="Confirm Password"
-            placeholder="Your password"
+            label="Confirme sua senha"
+            placeholder="Sua senha"
             value={confirmPassword}
             onChange={(event) => {
               setConfirmPassword(event.currentTarget.value);
@@ -117,7 +122,7 @@ export default function SignupPage() {
             mt="md"
           />
           <Button fullWidth mt="xl" onClick={onSubmit} disabled={!isFormValid}>
-            Sign up
+            Enviar cadastro
           </Button>
         </Paper>
       </Container>
