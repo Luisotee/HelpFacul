@@ -33,7 +33,13 @@ export function TopBarUserInfo({ classes, theme }: any) {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item icon={<User size={14} />}>Meu cadastro</Menu.Item>
-            <Menu.Item icon={<Ad2 size={14} />}>Meus anúncios</Menu.Item>
+            <Menu.Item
+              component="a"
+              href="/user-profile-creation-page"
+              icon={<Ad2 size={14} />}
+            >
+              Criar anúncio
+            </Menu.Item>
             <Menu.Item icon={<Logout size={14} />}>Log out</Menu.Item>
             <Menu.Divider />
             <Menu.Label>Zona de perigo</Menu.Label>
