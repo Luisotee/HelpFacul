@@ -2,7 +2,7 @@ import isLogged from "@/controller/isLogged";
 import { Avatar, Button, Group, Menu } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/router";
-import { Ad2, Logout, User } from "tabler-icons-react";
+import { Ad2, Edit, Logout, User } from "tabler-icons-react";
 
 export function TopBarUserInfo({ classes, theme }: any) {
   const router = useRouter();
@@ -32,13 +32,20 @@ export function TopBarUserInfo({ classes, theme }: any) {
             </Button>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item icon={<User size={14} />}>Meu cadastro</Menu.Item>
+            <Menu.Item icon={<User size={14} />}>Meu perfil</Menu.Item>
             <Menu.Item
               component="a"
               href="/user-profile-creation-page"
               icon={<Ad2 size={14} />}
             >
               Criar anúncio
+            </Menu.Item>
+            <Menu.Item
+              component="a"
+              href="/user-profile-creation-page"
+              icon={<Edit size={14} />}
+            >
+              Editar anúncio
             </Menu.Item>
             <Menu.Item icon={<Logout size={14} />}>Log out</Menu.Item>
             <Menu.Divider />

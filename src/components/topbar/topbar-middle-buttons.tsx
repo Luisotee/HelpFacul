@@ -13,11 +13,18 @@ import {
   rem,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { DarkTheme } from "./darktheme";
 
 export function TopBarMiddleButtons({ classes, theme }: any) {
   const links = mockdata.map((item) => (
-    <UnstyledButton className={classes.subLink} key={item.title}>
+    <Link
+      href={item.path}
+      className={classes.subLink}
+      key={item.title}
+      style={{ textDecoration: "none" }}
+    >
       <Group noWrap align="flex-start">
         <ThemeIcon size={34} variant="default" radius="md">
           <item.icon size={rem(22)} color={theme.fn.primaryColor()} />
@@ -31,7 +38,7 @@ export function TopBarMiddleButtons({ classes, theme }: any) {
           </Text>
         </div>
       </Group>
-    </UnstyledButton>
+    </Link>
   ));
 
   const router = useRouter();
@@ -87,9 +94,7 @@ export function TopBarMiddleButtons({ classes, theme }: any) {
             </SimpleGrid>
           </HoverCard.Dropdown>
         </HoverCard>
-        <a href="#" className={classes.link}>
-          Sobre
-        </a>
+        <DarkTheme />
       </Group>
     </>
   );
