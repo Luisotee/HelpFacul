@@ -90,22 +90,22 @@ export const mockdata = [
   },
   {
     icon: ChartInfographic,
-    title: "Aulas de estatística",
+    title: "Estatística",
     description: "Aulas de estatística",
   },
   {
     icon: Bolt,
     title: "Elétrica",
-    description: "Aulas de estatística elétrica",
+    description: "Aulas de elétrica",
   },
   {
     icon: Cpu,
     title: "Eletrônica",
-    description: "Aulas de estatística eletrônica",
+    description: "Aulas de eletrônica",
   },
   {
     icon: Database,
     title: "Banco de dados",
-    description: "Aulas de estatística banco de dados",
+    description: "Aulas de banco de dados",
   },
 ];
