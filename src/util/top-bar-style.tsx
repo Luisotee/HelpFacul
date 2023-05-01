@@ -82,30 +82,36 @@ export const mockdata = [
     icon: Math,
     title: "Matemática",
     description: "Aulas de matemática",
+    path: "/math",
   },
   {
     icon: Atom,
     title: "Química",
     description: "Aulas de química",
+    path: "/math",
   },
   {
     icon: ChartInfographic,
     title: "Estatística",
     description: "Aulas de estatística",
+    path: "/math",
   },
   {
     icon: Bolt,
     title: "Elétrica",
     description: "Aulas de elétrica",
+    path: "/math",
   },
   {
     icon: Cpu,
     title: "Eletrônica",
     description: "Aulas de eletrônica",
+    path: "/math",
   },
   {
     icon: Database,
     title: "Banco de dados",
     description: "Aulas de banco de dados",
+    path: "/math",
   },
 ];
