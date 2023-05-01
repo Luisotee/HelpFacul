@@ -15,6 +15,7 @@ import {
 import { IconChevronDown } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { DarkTheme } from "./darktheme";
 
 export function TopBarMiddleButtons({ classes, theme }: any) {
   const links = mockdata.map((item) => (
@@ -93,6 +94,7 @@ export function TopBarMiddleButtons({ classes, theme }: any) {
             </SimpleGrid>
           </HoverCard.Dropdown>
         </HoverCard>
+        <DarkTheme />
       </Group>
     </>
   );
