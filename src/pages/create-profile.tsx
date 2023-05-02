@@ -1,5 +1,6 @@
 import { TopBar } from "@/components/topbar/top-bar";
 import {
+  Button,
   Center,
   MultiSelect,
   NumberInput,
@@ -42,15 +43,28 @@ export default function CreateProfile() {
             withAsterisk
           />
           <NumberInput
-            label="Compensação desejada por hora"
-            mt="lg"
-            defaultValue={0}
-            parser={(value) => value.replace(/$\s?|(,*)/g, "")}
+            label="Valor que você quer receber por hora"
+            defaultValue={10}
+            parser={(value) => {
+              // Remove any characters that are not digits, commas, or periods
+              value = value.replace(/[^\d,.]/g, "");
+
+              // Replace commas with periods for decimal point consistency
+              value = value.replace(",", ".");
+
+              // Remove any negative sign from the input value
+              value = value.replace("-", "");
+
+              return value;
+            }}
             formatter={(value) =>
               !Number.isNaN(parseFloat(value))
-                ? `$ ${value}`.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
-                : "$ "
+                ? `R$ ${value}`
+                    .replace(".", ",")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+                : "R$ "
             }
+            mt="lg"
             withAsterisk
           />
           <TextInput
@@ -71,6 +85,9 @@ export default function CreateProfile() {
             mt="lg"
             withAsterisk
           />
+          <Center mt="xl">
+            <Button>Confirmar</Button>
+          </Center>
         </Paper>
       </Center>
     </>
