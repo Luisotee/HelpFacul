@@ -1,5 +1,6 @@
 import { TopBar } from "@/components/topbar/top-bar";
 import {
+  Button,
   Card,
   Center,
   FileInput,
@@ -97,6 +98,9 @@ export default function UserProfileCreationPage() {
             mt="lg"
             withAsterisk
           />
+          <Center mt="xl">
+            <Button>Confirmar</Button>
+          </Center>
         </Card>
       </Center>
     </>
