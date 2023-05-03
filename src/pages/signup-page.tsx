@@ -13,7 +13,7 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 
-import { auth } from "@/controller/Firebase";
+import { auth } from "@/controller/firebase";
 import isLogged from "@/controller/isLogged";
 import { useRouter } from "next/router";
 

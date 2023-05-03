@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import app from "./Firebase";
+import app from "./firebase";
 
 export default function isLogged() {
   const auth = getAuth(app);

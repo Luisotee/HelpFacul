@@ -1,5 +1,5 @@
 import { TopBar } from "@/components/topbar/top-bar";
-import { auth } from "@/controller/Firebase";
+import { auth } from "@/controller/firebase";
 import isLogged from "@/controller/isLogged";
 import {
   Anchor,
