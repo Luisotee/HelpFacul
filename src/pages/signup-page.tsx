@@ -32,7 +32,7 @@ export default function SignupPage() {
   if (isUser) {
     console.log("Usúario já está logado!");
     router.push("/");
-    alert("Usúario já está logado!");
+    console.log("Usúario já está logado!");
     return null;
   }
 
