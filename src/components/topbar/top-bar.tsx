@@ -16,7 +16,7 @@ export function TopBar() {
 
   const router = useRouter();
   const user = isLogged();
-  console.log("TOPBAR USER: " + JSON.stringify(user));
+  //console.log("TOPBAR USER: " + JSON.stringify(user));
 
   function handleClickHome(e: { preventDefault: () => void }) {
     e.preventDefault();

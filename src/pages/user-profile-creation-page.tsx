@@ -1,18 +1,30 @@
 import { TopBar } from "@/components/topbar/top-bar";
 import {
   Button,
-  Card,
   Center,
   FileInput,
   MultiSelect,
   NumberInput,
+  Paper,
   TextInput,
   Textarea,
 } from "@mantine/core";
 import { IconUpload } from "@tabler/icons-react";
+import { useState } from "react";
+import { addUserToFirestore } from "../controller/firestore";
 
 export default function UserProfileCreationPage() {
-  const subjects = [
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [city, setCity] = useState("");
+  const [aboutYou, setAboutYou] = useState("");
+  const [university, setUniversity] = useState("");
+  const [contact, setContact] = useState("");
+  const [subjects, setSubjects] = useState([""]);
+  const [money, setMoney] = useState<number | "">(0);
+  const [userPhoto, setUserPhoto] = useState<File | null>(null);
+
+  const subjectsData = [
     { value: "Matemática", label: "Matemática" },
     { value: "Estatística", label: "Estatística" },
     { value: "Eletrônica", label: "Eletrônica" },
@@ -20,22 +32,56 @@ export default function UserProfileCreationPage() {
     { value: "Elétrica", label: "Elétrica" },
     { value: "Banco de dados", label: "Banco de dados" },
   ];
+
+  const handleButtonClick = () => {
+    const user = {
+      name: name,
+      description: description,
+      city: city,
+      aboutYou: aboutYou,
+      university: university,
+      contact: contact,
+      subjects: subjects,
+      money: money,
+    };
+
+    console.log(user);
+
+    addUserToFirestore(user)
+      .then((documentId) => {
+        console.log("User added to Firestore with ID:", documentId);
+      })
+      .catch((error) => {
+        console.error("Error adding user to Firestore:", error);
+      });
+  };
+
   return (
     <>
       <TopBar />
       <Center>
-        <Card shadow="sm" padding="lg" radius="md" w={864} withBorder>
-          <TextInput placeholder="Seu nome" label="Nome" withAsterisk />
+        <Paper withBorder shadow="md" p={30} mt={30} radius="md" w="40%">
+          <TextInput
+            placeholder="Seu nome"
+            label="Nome"
+            value={name}
+            onChange={(event) => setName(event.currentTarget.value)}
+            withAsterisk
+          />
           <TextInput
             placeholder="Escreva uma breve descrição sobre você"
             label="Descrição"
             mt="lg"
+            value={description}
+            onChange={(event) => setDescription(event.currentTarget.value)}
             withAsterisk
           />
           <TextInput
             placeholder="Cidade que você poderá lecionar"
             label="Cidade"
             mt="lg"
+            value={city}
+            onChange={(event) => setCity(event.currentTarget.value)}
             withAsterisk
           />
           <Textarea
@@ -44,18 +90,24 @@ export default function UserProfileCreationPage() {
             autosize
             minRows={2}
             mt="lg"
+            value={aboutYou}
+            onChange={(event) => setAboutYou(event.currentTarget.value)}
             withAsterisk
           />
           <TextInput
             placeholder="Sua faculdade"
             label="Faculdade"
             mt="lg"
+            value={university}
+            onChange={(event) => setUniversity(event.currentTarget.value)}
             withAsterisk
           />
           <TextInput
             placeholder="Email, whatsapp, linkedin, etc..."
             label="Contato"
             mt="lg"
+            value={contact}
+            onChange={(event) => setContact(event.currentTarget.value)}
             withAsterisk
           />
           <FileInput
@@ -64,26 +116,25 @@ export default function UserProfileCreationPage() {
             icon={<IconUpload size={14} />}
             accept="image/png,image/jpeg"
             mt="lg"
+            value={userPhoto}
+            onChange={setUserPhoto}
             withAsterisk
           />
           <MultiSelect
-            data={subjects}
+            data={subjectsData}
             label="Matérias que você pode ensinar"
             placeholder="Escolha as que você se sente confiante em ensinar"
             mt="lg"
+            value={subjects}
+            onChange={setSubjects}
             withAsterisk
           />
           <NumberInput
             label="Valor que você quer receber por hora"
             defaultValue={10}
             parser={(value) => {
-              // Remove any characters that are not digits, commas, or periods
               value = value.replace(/[^\d,.]/g, "");
-
-              // Replace commas with periods for decimal point consistency
               value = value.replace(",", ".");
-
-              // Remove any negative sign from the input value
               value = value.replace("-", "");
 
               return value;
@@ -96,12 +147,14 @@ export default function UserProfileCreationPage() {
                 : "R$ "
             }
             mt="lg"
+            value={money}
+            onChange={setMoney}
             withAsterisk
           />
           <Center mt="xl">
-            <Button>Confirmar</Button>
+            <Button onClick={handleButtonClick}>Confirmar</Button>
           </Center>
-        </Card>
+        </Paper>
       </Center>
     </>
   );

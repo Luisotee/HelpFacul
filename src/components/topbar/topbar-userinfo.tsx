@@ -7,7 +7,7 @@ import { Ad2, Edit, Logout, User } from "tabler-icons-react";
 export function TopBarUserInfo({ classes, theme }: any) {
   const router = useRouter();
   const user = isLogged();
-  console.log("TOPBAR USER: " + JSON.stringify(user));
+  //console.log("TOPBAR USER: " + JSON.stringify(user));
 
   function handleClickLogin(e: { preventDefault: () => void }) {
     e.preventDefault();
