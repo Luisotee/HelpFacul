@@ -11,7 +11,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { auth } from "@/controller/firebase";
 import isLogged from "@/controller/isLogged";
@@ -24,16 +24,25 @@ export default function SignupPage() {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
   const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
-  const isUser = isLogged();
+  useEffect(() => {
+    async function checkUserLoggedIn() {
+      const isUser = await isLogged();
+      if (isUser) {
+        console.log("User is already logged in!");
+        router.push("/");
+      }
+      setLoading(false);
+    }
 
-  if (isUser) {
-    console.log("Usúario já está logado!");
-    router.push("/");
-    console.log("Usúario já está logado!");
-    return null;
+    checkUserLoggedIn();
+  }, [router]);
+
+  if (typeof window === "undefined" || loading) {
+    return null; // Return null during server-side rendering or while loading
   }
 
   function validateEmail(email: string) {

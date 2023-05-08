@@ -1,15 +1,19 @@
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import app from "./firebase";
 
 export default function isLogged() {
-  const auth = getAuth(app);
-  const user = auth.currentUser;
+  return new Promise((resolve) => {
+    const auth = getAuth(app);
+    const user = auth.currentUser;
 
-  if (user) {
-    // User is signed in
-    return user;
-  } else {
-    // No user is signed in.
-    return false;
-  }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        resolve(user);
+      } else {
+        // No user is signed in
+        resolve(false);
+      }
+    });
+  });
 }
