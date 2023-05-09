@@ -8,9 +8,10 @@ import {
   Paper,
   TextInput,
   Textarea,
+  Text,
 } from "@mantine/core";
 import { IconUpload } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addUserToFirestore } from "../controller/firestore";
 
 export default function UserProfileCreationPage() {
@@ -20,9 +21,21 @@ export default function UserProfileCreationPage() {
   const [aboutYou, setAboutYou] = useState("");
   const [university, setUniversity] = useState("");
   const [contact, setContact] = useState("");
-  const [subjects, setSubjects] = useState([""]);
+  const [subjects, setSubjects] = useState<string[]>([]);
   const [money, setMoney] = useState<number | "">(0);
   const [userPhoto, setUserPhoto] = useState<File | null>(null);
+
+  const [valid, setValid] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   const subjectsData = [
     { value: "Matemática", label: "Matemática" },
@@ -56,6 +69,34 @@ export default function UserProfileCreationPage() {
       });
   };
 
+  useEffect(() => {
+    const isValid = [
+      name.trim() !== "",
+      description.trim() !== "",
+      city.trim() !== "",
+      aboutYou.trim() !== "",
+      university.trim() !== "",
+      contact.trim() !== "",
+      subjects.length >= 1,
+      money != "" && money !== null && !isNaN(money),
+      userPhoto != null,
+    ];
+    setValid(isValid);
+    console.log(isValid);
+  }, [
+    name,
+    description,
+    city,
+    aboutYou,
+    university,
+    contact,
+    subjects,
+    money,
+    userPhoto,
+  ]);
+
+  const isFormValid = valid.every((isValid) => isValid);
+
   return (
     <>
       <TopBar />
@@ -66,22 +107,29 @@ export default function UserProfileCreationPage() {
             label="Nome"
             value={name}
             onChange={(event) => setName(event.currentTarget.value)}
+            error={!valid[0]}
+            description="Nome deve ter mais que um caractere"
             withAsterisk
           />
+
           <TextInput
             placeholder="Escreva uma breve descrição sobre você"
             label="Descrição"
-            mt="lg"
+            mt="md"
             value={description}
             onChange={(event) => setDescription(event.currentTarget.value)}
+            error={!valid[1]}
+            description="Descrição deve ter mais que um caractere"
             withAsterisk
           />
           <TextInput
             placeholder="Cidade que você poderá lecionar"
             label="Cidade"
-            mt="lg"
+            mt="md"
             value={city}
             onChange={(event) => setCity(event.currentTarget.value)}
+            error={!valid[2]}
+            description="Cidade deve ter mais que um caractere"
             withAsterisk
           />
           <Textarea
@@ -89,25 +137,31 @@ export default function UserProfileCreationPage() {
             label="Sobre você"
             autosize
             minRows={2}
-            mt="lg"
+            mt="md"
             value={aboutYou}
             onChange={(event) => setAboutYou(event.currentTarget.value)}
+            error={!valid[3]}
+            description="Sobre você deve ter mais que um caractere"
             withAsterisk
           />
           <TextInput
             placeholder="Sua faculdade"
             label="Faculdade"
-            mt="lg"
+            mt="md"
             value={university}
             onChange={(event) => setUniversity(event.currentTarget.value)}
+            error={!valid[4]}
+            description="Faculdade você deve ter mais que um caractere"
             withAsterisk
           />
           <TextInput
             placeholder="Email, whatsapp, linkedin, etc..."
             label="Contato"
-            mt="lg"
+            mt="md"
             value={contact}
             onChange={(event) => setContact(event.currentTarget.value)}
+            error={!valid[5]}
+            description="Contato você deve ter mais que um caractere"
             withAsterisk
           />
           <FileInput
@@ -115,18 +169,20 @@ export default function UserProfileCreationPage() {
             label="Foto de perfil"
             icon={<IconUpload size={14} />}
             accept="image/png,image/jpeg"
-            mt="lg"
+            mt="md"
             value={userPhoto}
             onChange={setUserPhoto}
+            error={!valid[8]}
             withAsterisk
           />
           <MultiSelect
             data={subjectsData}
             label="Matérias que você pode ensinar"
             placeholder="Escolha as que você se sente confiante em ensinar"
-            mt="lg"
+            mt="md"
             value={subjects}
             onChange={setSubjects}
+            error={!valid[6]}
             withAsterisk
           />
           <NumberInput
@@ -146,13 +202,16 @@ export default function UserProfileCreationPage() {
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
                 : "R$ "
             }
-            mt="lg"
+            mt="md"
             value={money}
             onChange={setMoney}
+            error={!valid[7]}
             withAsterisk
           />
           <Center mt="xl">
-            <Button onClick={handleButtonClick}>Confirmar</Button>
+            <Button onClick={handleButtonClick} disabled={!isFormValid}>
+              Confirmar
+            </Button>
           </Center>
         </Paper>
       </Center>
