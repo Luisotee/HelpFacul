@@ -2,11 +2,12 @@ import isLogged from "@/controller/isLogged";
 import { Avatar, Button, Group, Menu } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Ad2, Edit, Logout, User } from "tabler-icons-react";
 
 export function TopBarUserInfo({ classes, theme }: any) {
   const router = useRouter();
-  const user = isLogged();
+  const [user, setUser] = useState(null);
   //console.log("TOPBAR USER: " + JSON.stringify(user));
 
   function handleClickLogin(e: { preventDefault: () => void }) {
@@ -17,6 +18,19 @@ export function TopBarUserInfo({ classes, theme }: any) {
   function handleClickSignup(e: { preventDefault: () => void }) {
     e.preventDefault();
     router.push("/signup-page");
+  }
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await isLogged();
+      setUser(user);
+    }
+
+    fetchUser();
+  }, []);
+
+  if (!user) {
+    return null; // Render null or loading state if user is not available yet
   }
 
   return (
