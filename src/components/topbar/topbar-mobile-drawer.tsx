@@ -16,6 +16,7 @@ import {
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 import { TopBarUserInfo } from "./topbar-userinfo";
+import { useEffect, useState } from "react";
 
 export function TopBarMobileDrawer({
   drawerOpened,
@@ -25,7 +26,16 @@ export function TopBarMobileDrawer({
   toggleLinks,
   linksOpened,
 }: any) {
-  const user = isLogged();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await isLogged();
+      setUser(user);
+    }
+
+    fetchUser();
+  }, []);
 
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
