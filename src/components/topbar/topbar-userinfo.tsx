@@ -8,17 +8,7 @@ import { Ad2, Edit, Logout, User } from "tabler-icons-react";
 export function TopBarUserInfo({ classes, theme }: any) {
   const router = useRouter();
   const [user, setUser] = useState(null);
-  //console.log("TOPBAR USER: " + JSON.stringify(user));
-
-  function handleClickLogin(e: { preventDefault: () => void }) {
-    e.preventDefault();
-    router.push("/login-page");
-  }
-
-  function handleClickSignup(e: { preventDefault: () => void }) {
-    e.preventDefault();
-    router.push("/signup-page");
-  }
+  console.log("TOPBAR USER: " + JSON.stringify(user));
 
   useEffect(() => {
     async function fetchUser() {
@@ -29,8 +19,14 @@ export function TopBarUserInfo({ classes, theme }: any) {
     fetchUser();
   }, []);
 
-  if (!user) {
-    return null; // Render null or loading state if user is not available yet
+  function handleClickLogin(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    router.push("/login-page");
+  }
+
+  function handleClickSignup(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    router.push("/signup-page");
   }
 
   return (

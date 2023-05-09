@@ -1,4 +1,5 @@
 import { TopBar } from "@/components/topbar/top-bar";
+import isLogged from "@/controller/isLogged";
 import {
   Button,
   Center,
@@ -8,9 +9,9 @@ import {
   Paper,
   TextInput,
   Textarea,
-  Text,
 } from "@mantine/core";
 import { IconUpload } from "@tabler/icons-react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { addUserToFirestore } from "../controller/firestore";
 
@@ -24,6 +25,8 @@ export default function UserProfileCreationPage() {
   const [subjects, setSubjects] = useState<string[]>([]);
   const [money, setMoney] = useState<number | "">(0);
   const [userPhoto, setUserPhoto] = useState<File | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   const [valid, setValid] = useState([
     false,
@@ -46,29 +49,6 @@ export default function UserProfileCreationPage() {
     { value: "Banco de dados", label: "Banco de dados" },
   ];
 
-  const handleButtonClick = () => {
-    const user = {
-      name: name,
-      description: description,
-      city: city,
-      aboutYou: aboutYou,
-      university: university,
-      contact: contact,
-      subjects: subjects,
-      money: money,
-    };
-
-    console.log(user);
-
-    addUserToFirestore(user)
-      .then((documentId) => {
-        console.log("User added to Firestore with ID:", documentId);
-      })
-      .catch((error) => {
-        console.error("Error adding user to Firestore:", error);
-      });
-  };
-
   useEffect(() => {
     const isValid = [
       name.trim() !== "",
@@ -82,7 +62,6 @@ export default function UserProfileCreationPage() {
       userPhoto != null,
     ];
     setValid(isValid);
-    console.log(isValid);
   }, [
     name,
     description,
@@ -94,6 +73,40 @@ export default function UserProfileCreationPage() {
     money,
     userPhoto,
   ]);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await isLogged();
+      setUser(user);
+    }
+
+    fetchUser();
+    if (!user) {
+      router.push("/error-page");
+    }
+  }, [router, user]);
+
+  const handleButtonClick = () => {
+    const userToSend = {
+      name: name,
+      description: description,
+      city: city,
+      aboutYou: aboutYou,
+      university: university,
+      contact: contact,
+      subjects: subjects,
+      money: money,
+      uid: user?.uid,
+    };
+
+    addUserToFirestore(userToSend)
+      .then((documentId) => {
+        console.log("User added to Firestore with ID:", documentId);
+      })
+      .catch((error) => {
+        console.error("Error adding user to Firestore:", error);
+      });
+  };
 
   const isFormValid = valid.every((isValid) => isValid);
 
