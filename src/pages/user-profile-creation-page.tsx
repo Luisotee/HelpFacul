@@ -26,6 +26,7 @@ export default function UserProfileCreationPage() {
   const [money, setMoney] = useState<number | "">(0);
   const [userPhoto, setUserPhoto] = useState<File | null>(null);
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const [valid, setValid] = useState([
@@ -78,13 +79,17 @@ export default function UserProfileCreationPage() {
     async function fetchUser() {
       const user = await isLogged();
       setUser(user);
+      setLoading(false);
     }
 
     fetchUser();
-    if (!user) {
+  }, []);
+
+  useEffect(() => {
+    if (!loading && !user) {
       router.push("/error-page");
     }
-  }, [router, user]);
+  }, [loading, user, router]);
 
   const handleButtonClick = () => {
     const userToSend = {
