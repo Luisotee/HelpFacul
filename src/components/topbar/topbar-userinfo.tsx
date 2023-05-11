@@ -8,7 +8,7 @@ import { Ad2, Edit, Logout, User } from "tabler-icons-react";
 export function TopBarUserInfo({ classes, theme }: any) {
   const router = useRouter();
   const [user, setUser] = useState(null);
-  console.log("TOPBAR USER: " + JSON.stringify(user));
+  //console.log("TOPBAR USER: " + JSON.stringify(user));
 
   useEffect(() => {
     async function fetchUser() {

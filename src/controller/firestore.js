@@ -1,8 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import app from "./firebase";
-
-// Initialize Firebase app (ensure you have already configured your Firebase project)
 
 // Function to insert user data into Firestore collection
 export function addUserToFirestore(userInfo) {
@@ -19,4 +16,14 @@ export function addUserToFirestore(userInfo) {
         reject(error);
       });
   });
+}
+
+export async function getDataFromAllUserProfile() {
+  const db = getFirestore(app);
+  const usersRef = collection(db, "users");
+  const snapshot = await getDocs(usersRef);
+  //snapshot.forEach((doc) => {
+  // console.log(doc.id, "=>", doc.data());
+  //});
+  return snapshot;
 }

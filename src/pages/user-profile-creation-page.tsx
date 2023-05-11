@@ -16,16 +16,19 @@ import { useEffect, useState } from "react";
 import { addUserToFirestore } from "../controller/firestore";
 
 export default function UserProfileCreationPage() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [city, setCity] = useState("");
-  const [aboutYou, setAboutYou] = useState("");
-  const [university, setUniversity] = useState("");
-  const [contact, setContact] = useState("");
-  const [subjects, setSubjects] = useState<string[]>([]);
-  const [money, setMoney] = useState<number | "">(0);
+  const [user, setUser] = useState({
+    name: "",
+    description: "",
+    city: "",
+    aboutYou: "",
+    university: "",
+    course: "",
+    contact: "",
+    subjects: [] as string[],
+    money: 0,
+  });
   const [userPhoto, setUserPhoto] = useState<File | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const [loggedUser, setLoggedUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -52,33 +55,24 @@ export default function UserProfileCreationPage() {
 
   useEffect(() => {
     const isValid = [
-      name.trim() !== "",
-      description.trim() !== "",
-      city.trim() !== "",
-      aboutYou.trim() !== "",
-      university.trim() !== "",
-      contact.trim() !== "",
-      subjects.length >= 1,
-      money != "" && money !== null && !isNaN(money),
+      user.name.trim() !== "",
+      user.description.trim() !== "",
+      user.city.trim() !== "",
+      user.aboutYou.trim() !== "",
+      user.university.trim() !== "",
+      user.contact.trim() !== "",
+      user.subjects.length >= 1,
+      user.money !== null && !isNaN(user.money),
       userPhoto != null,
+      user.course.trim() !== "",
     ];
     setValid(isValid);
-  }, [
-    name,
-    description,
-    city,
-    aboutYou,
-    university,
-    contact,
-    subjects,
-    money,
-    userPhoto,
-  ]);
+  }, [user, userPhoto]);
 
   useEffect(() => {
     async function fetchUser() {
       const user = await isLogged();
-      setUser(user);
+      setLoggedUser(user);
       setLoading(false);
     }
 
@@ -86,23 +80,17 @@ export default function UserProfileCreationPage() {
   }, []);
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !loggedUser) {
       router.push("/error-page");
     }
-  }, [loading, user, router]);
+  }, [loading, loggedUser, router]);
 
   const handleButtonClick = () => {
     const userToSend = {
-      name: name,
-      description: description,
-      city: city,
-      aboutYou: aboutYou,
-      university: university,
-      contact: contact,
-      subjects: subjects,
-      money: money,
-      uid: user?.uid,
+      ...user,
+      uid: loggedUser?.uid,
     };
+    console.log(userToSend);
 
     addUserToFirestore(userToSend)
       .then((documentId) => {
@@ -123,8 +111,10 @@ export default function UserProfileCreationPage() {
           <TextInput
             placeholder="Seu nome"
             label="Nome"
-            value={name}
-            onChange={(event) => setName(event.currentTarget.value)}
+            value={user.name}
+            onChange={(event) =>
+              setUser({ ...user, name: event.currentTarget.value })
+            }
             error={!valid[0]}
             description="Nome deve ter mais que um caractere"
             withAsterisk
@@ -134,8 +124,10 @@ export default function UserProfileCreationPage() {
             placeholder="Escreva uma breve descrição sobre você"
             label="Descrição"
             mt="md"
-            value={description}
-            onChange={(event) => setDescription(event.currentTarget.value)}
+            value={user.description}
+            onChange={(event) =>
+              setUser({ ...user, description: event.currentTarget.value })
+            }
             error={!valid[1]}
             description="Descrição deve ter mais que um caractere"
             withAsterisk
@@ -144,8 +136,10 @@ export default function UserProfileCreationPage() {
             placeholder="Cidade que você poderá lecionar"
             label="Cidade"
             mt="md"
-            value={city}
-            onChange={(event) => setCity(event.currentTarget.value)}
+            value={user.city}
+            onChange={(event) =>
+              setUser({ ...user, city: event.currentTarget.value })
+            }
             error={!valid[2]}
             description="Cidade deve ter mais que um caractere"
             withAsterisk
@@ -156,8 +150,10 @@ export default function UserProfileCreationPage() {
             autosize
             minRows={2}
             mt="md"
-            value={aboutYou}
-            onChange={(event) => setAboutYou(event.currentTarget.value)}
+            value={user.aboutYou}
+            onChange={(event) =>
+              setUser({ ...user, aboutYou: event.currentTarget.value })
+            }
             error={!valid[3]}
             description="Sobre você deve ter mais que um caractere"
             withAsterisk
@@ -166,9 +162,23 @@ export default function UserProfileCreationPage() {
             placeholder="Sua faculdade"
             label="Faculdade"
             mt="md"
-            value={university}
-            onChange={(event) => setUniversity(event.currentTarget.value)}
+            value={user.university}
+            onChange={(event) =>
+              setUser({ ...user, university: event.currentTarget.value })
+            }
             error={!valid[4]}
+            description="Faculdade você deve ter mais que um caractere"
+            withAsterisk
+          />
+          <TextInput
+            placeholder="Curso que você está matriculado"
+            label="Curso"
+            mt="md"
+            value={user.course}
+            onChange={(event) =>
+              setUser({ ...user, course: event.currentTarget.value })
+            }
+            error={!valid[9]}
             description="Faculdade você deve ter mais que um caractere"
             withAsterisk
           />
@@ -176,8 +186,10 @@ export default function UserProfileCreationPage() {
             placeholder="Email, whatsapp, linkedin, etc..."
             label="Contato"
             mt="md"
-            value={contact}
-            onChange={(event) => setContact(event.currentTarget.value)}
+            value={user.contact}
+            onChange={(event) =>
+              setUser({ ...user, contact: event.currentTarget.value })
+            }
             error={!valid[5]}
             description="Contato você deve ter mais que um caractere"
             withAsterisk
@@ -198,11 +210,14 @@ export default function UserProfileCreationPage() {
             label="Matérias que você pode ensinar"
             placeholder="Escolha as que você se sente confiante em ensinar"
             mt="md"
-            value={subjects}
-            onChange={setSubjects}
+            value={user.subjects}
+            onChange={(selectedItems) =>
+              setUser({ ...user, subjects: selectedItems as string[] })
+            }
             error={!valid[6]}
             withAsterisk
           />
+
           <NumberInput
             label="Valor que você quer receber por hora"
             defaultValue={10}
@@ -221,11 +236,12 @@ export default function UserProfileCreationPage() {
                 : "R$ "
             }
             mt="md"
-            value={money}
-            onChange={setMoney}
+            value={user.money}
+            onChange={(value) => setUser({ ...user, money: Number(value) })}
             error={!valid[7]}
             withAsterisk
           />
+
           <Center mt="xl">
             <Button onClick={handleButtonClick} disabled={!isFormValid}>
               Confirmar
