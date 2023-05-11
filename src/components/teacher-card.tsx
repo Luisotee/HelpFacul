@@ -5,14 +5,16 @@ interface UserInfoActionProps {
   avatar: string;
   name: string;
   university: string;
-  subject: string;
+  subjects: string[];
+  course: string;
 }
 
 export function TeacherCard({
   avatar,
   name,
   university,
-  subject,
+  subjects,
+  course,
 }: UserInfoActionProps) {
   const router = useRouter();
 
@@ -37,26 +39,14 @@ export function TeacherCard({
         {name}
       </Text>
       <Text ta="center" c="dimmed" fz="sm">
-        {university} • {subject}
+        {university} • {course}
       </Text>
-      <Badge size="md" mt="md">
-        Fisica Aplicada
-      </Badge>
-      <Badge size="md" mt="md">
-        Calculo I
-      </Badge>
-      <Badge size="md" mt="md">
-        Calculo II
-      </Badge>
-      <Badge size="md" mt="md">
-        Calculo III
-      </Badge>
-      <Badge size="md" mt="md">
-        Resistencia dos materiais
-      </Badge>
-      <Text ta="center" mt="sm" fz="md" fw="bold">
-        R$40/hr
-      </Text>
+      {subjects.map((subject, index) => (
+        <Badge key={index} size="md" mt="md">
+          {subject}
+        </Badge>
+      ))}
+
       <Button variant="default" fullWidth mt="md" onClick={handleClickDetail}>
         Detalhes
       </Button>

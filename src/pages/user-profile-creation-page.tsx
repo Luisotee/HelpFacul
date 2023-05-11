@@ -22,6 +22,7 @@ export default function UserProfileCreationPage() {
     city: "",
     aboutYou: "",
     university: "",
+    course: "",
     contact: "",
     subjects: [] as string[],
     money: 0,
@@ -63,6 +64,7 @@ export default function UserProfileCreationPage() {
       user.subjects.length >= 1,
       user.money !== null && !isNaN(user.money),
       userPhoto != null,
+      user.course.trim() !== "",
     ];
     setValid(isValid);
   }, [user, userPhoto]);
@@ -165,6 +167,18 @@ export default function UserProfileCreationPage() {
               setUser({ ...user, university: event.currentTarget.value })
             }
             error={!valid[4]}
+            description="Faculdade você deve ter mais que um caractere"
+            withAsterisk
+          />
+          <TextInput
+            placeholder="Curso que você está matriculado"
+            label="Curso"
+            mt="md"
+            value={user.course}
+            onChange={(event) =>
+              setUser({ ...user, course: event.currentTarget.value })
+            }
+            error={!valid[9]}
             description="Faculdade você deve ter mais que um caractere"
             withAsterisk
           />

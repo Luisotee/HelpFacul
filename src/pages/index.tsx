@@ -29,7 +29,8 @@ export default function Home() {
             name={user.name}
             university={user.university}
             avatar=""
-            subject=""
+            subjects={user.subjects}
+            course={user.course}
           />
         ))}
       </Group>

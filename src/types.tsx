@@ -8,4 +8,5 @@ export interface User {
   subjects: string[];
   uid: string;
   university: string;
+  course: string;
 }
