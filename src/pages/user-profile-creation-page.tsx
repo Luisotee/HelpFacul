@@ -109,7 +109,7 @@ export default function UserProfileCreationPage() {
       <Center>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md" w="40%">
           <TextInput
-            placeholder="Seu nome"
+            placeholder="João Pedro"
             label="Nome"
             value={user.name}
             onChange={(event) =>
@@ -121,8 +121,8 @@ export default function UserProfileCreationPage() {
           />
 
           <TextInput
-            placeholder="Escreva uma breve descrição sobre você"
-            label="Descrição"
+            placeholder="Aulas de cálculo I e II"
+            label="Breve descrição"
             mt="md"
             value={user.description}
             onChange={(event) =>
@@ -133,8 +133,8 @@ export default function UserProfileCreationPage() {
             withAsterisk
           />
           <TextInput
-            placeholder="Cidade que você poderá lecionar"
-            label="Cidade"
+            placeholder="Sorocaba, SP"
+            label="Localização"
             mt="md"
             value={user.city}
             onChange={(event) =>
@@ -145,7 +145,7 @@ export default function UserProfileCreationPage() {
             withAsterisk
           />
           <Textarea
-            placeholder="Conte mais sobre você"
+            placeholder="Conte sobre quando você consegue dar aulas, lugar, conteudos, e qualquer coisa que você queira."
             label="Sobre você"
             autosize
             minRows={2}

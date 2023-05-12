@@ -1,23 +1,28 @@
+import { User } from "@/types";
 import { Card, Text, Title } from "@mantine/core";
 
-export function UserDescriptionCard() {
+export function UserDescriptionCard({ user }: { user: User | null }) {
+  if (!user) {
+    return null; // Render nothing if user is null
+  }
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Title order={3}>Sobre</Title>
-      <Text>OI tudo benmk diknjfniaujuijfod</Text>
+      <Text>{user.aboutYou}</Text>
       <Title order={3} mt="sm">
         Localização
       </Title>
-      <Text>Sorocaba, São Paulo</Text>
+      <Text>{user.city}</Text>
 
       <Title order={3} mt="sm">
         Educação
       </Title>
-      <Text>Faculdade de foda-se</Text>
+      <Text>{user.university}</Text>
       <Title order={3} mt="sm">
         Contato
       </Title>
-      <Text>fodase@gmail.com</Text>
+      <Text>{user.contact}</Text>
     </Card>
   );
 }

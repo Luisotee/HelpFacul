@@ -22,15 +22,11 @@ export default function Home() {
   return (
     <>
       <TopBar />
-      <Group p="xl" mx="xl" w="90%" position="apart" spacing="xl">
+      <Group p="xl" mx="xl" w="90%" spacing="xl">
         {users.map((user) => (
           <TeacherCard
             key={user.uid} // Assuming each user has a unique "id" property
-            name={user.name}
-            university={user.university}
-            avatar=""
-            subjects={user.subjects}
-            course={user.course}
+            user={user}
           />
         ))}
       </Group>

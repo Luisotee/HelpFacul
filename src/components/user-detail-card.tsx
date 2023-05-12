@@ -1,6 +1,11 @@
+import { User } from "@/types";
 import { Avatar, Badge, Card, Image, Text, Title } from "@mantine/core";
 
-export function UserDetailCard() {
+export function UserDetailCard({ user }: { user: User | null }) {
+  if (!user) {
+    return null; // Render nothing if user is null
+  }
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
@@ -22,12 +27,11 @@ export function UserDetailCard() {
       </Card.Section>
       <Card.Section mt={50} p="xl">
         <Title order={3} fw="bold">
-          Luís Otávio
+          {user.name}
         </Title>
-        <Text>Aulas de calculo, fisica e quimica</Text>
-        <Text>Sorocaba, faculdade Facens</Text>
+        <Text>{user.description}</Text>
         <Badge color="green" size="lg" mt="sm">
-          R$40/hora
+          R${user.money}/hora
         </Badge>
       </Card.Section>
     </Card>
