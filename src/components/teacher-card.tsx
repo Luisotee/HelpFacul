@@ -1,29 +1,20 @@
+import { User } from "@/types";
 import { Avatar, Badge, Button, Paper, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 
-interface UserInfoActionProps {
-  avatar: string;
-  name: string;
-  university: string;
-  subjects: string[];
-  course: string;
-}
-
-export function TeacherCard({
-  avatar,
-  name,
-  university,
-  subjects,
-  course,
-}: UserInfoActionProps) {
+export function TeacherCard({ user }: { user: User }) {
   const router = useRouter();
 
   function handleClickDetail(e: { preventDefault: () => void }) {
     e.preventDefault();
-    router.push("/user-detail");
+    router.push({
+      pathname: "/user-detail",
+      query: { data: JSON.stringify(user) },
+    });
   }
   return (
     <Paper
+      key={user.uid} // Assign key prop to the Paper component
       radius="lg"
       w={330}
       withBorder
@@ -34,18 +25,21 @@ export function TeacherCard({
       })}
       style={{ borderColor: "lightgray" }}
     >
-      <Avatar src={avatar} size={140} radius={120} mx="auto" />
+      <Avatar src="" size={140} radius={120} mx="auto" />
       <Text ta="center" fz="xl" weight={500} mt="md">
-        {name}
+        {user.name}
       </Text>
       <Text ta="center" c="dimmed" fz="sm">
-        {university} • {course}
+        {user.university} • {user.course}
       </Text>
-      {subjects.map((subject, index) => (
+      {user.subjects.map((subject, index) => (
         <Badge key={index} size="md" mt="md">
           {subject}
         </Badge>
       ))}
+      <Text ta="center" mt="sm" fz="md" fw="bold">
+        R${user.money}/hr
+      </Text>
 
       <Button variant="default" fullWidth mt="md" onClick={handleClickDetail}>
         Detalhes
