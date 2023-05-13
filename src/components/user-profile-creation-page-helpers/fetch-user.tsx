@@ -1,13 +1,11 @@
 import isLogged from "@/controller/isLogged";
+import { User } from "@/types";
 
-export async function fetchUser({
-  setLoggedUser,
-  setLoading,
-}: {
-  setLoggedUser: React.Dispatch<React.SetStateAction<any>>;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-  const user = await isLogged();
-  setLoggedUser(user);
+export async function fetchUser(
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setUser: React.Dispatch<React.SetStateAction<User>>
+) {
+  const uid = await isLogged();
   setLoading(false);
+  setUser((prevUser) => ({ ...prevUser, uid: uid || "" }));
 }

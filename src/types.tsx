@@ -8,5 +8,6 @@ export interface User {
   contact: string;
   subjects: string[];
   money: number;
-  photoUrl: string; // Add the photoUrl property to the User type
+  photoUrl: string;
+  uid: string; // Change the type to string
 }

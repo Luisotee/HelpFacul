@@ -4,7 +4,6 @@ import { handleImgInput } from "./handle-img-input";
 
 export async function handleButtonClick(
   userPhoto: File | null,
-  loggedUser: { uid?: string },
   user: any,
   fileError: string
 ) {
@@ -15,14 +14,13 @@ export async function handleButtonClick(
       return;
     }
 
-    if (userPhoto && loggedUser.uid) {
-      url = await uploadFileToStorage(loggedUser.uid, userPhoto);
+    if (userPhoto && user.uid) {
+      url = await uploadFileToStorage(user.uid, userPhoto);
     }
 
     const userToSend = {
       ...user,
       photoUrl: url, // Update the photoUrl in the user state
-      uid: loggedUser?.uid,
     };
     console.log(userToSend);
 

@@ -2,7 +2,7 @@ import { User } from "@/types";
 import { Avatar, Badge, Button, Center, Paper, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 
-export function TeacherCard({ user }: { user: User }) {
+export function TeacherCard(user: User) {
   const router = useRouter();
 
   function handleClickDetail(e: { preventDefault: () => void }) {
@@ -12,6 +12,9 @@ export function TeacherCard({ user }: { user: User }) {
       query: { data: JSON.stringify(user) },
     });
   }
+
+  const subjects = Array.isArray(user.subjects) ? user.subjects : [];
+
   return (
     <Paper
       key={user.uid} // Assign key prop to the Paper component
@@ -33,7 +36,7 @@ export function TeacherCard({ user }: { user: User }) {
         {user.university} • {user.course}
       </Text>
       <Center>
-        {user.subjects.map((subject, index) => (
+        {subjects.map((subject, index) => (
           <Badge key={index} size="md" mt="md">
             {subject}
           </Badge>

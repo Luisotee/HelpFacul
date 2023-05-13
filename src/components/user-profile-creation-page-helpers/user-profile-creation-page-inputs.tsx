@@ -24,7 +24,6 @@ type UserProfileCreationPageInputsProps = {
   setFileError: React.Dispatch<React.SetStateAction<string>>;
   valid: boolean[];
   isFormValid: boolean;
-  loggedUser: any;
 };
 
 export function UserProfileCreationPageInputs({
@@ -36,7 +35,6 @@ export function UserProfileCreationPageInputs({
   setFileError,
   valid,
   isFormValid,
-  loggedUser,
 }: UserProfileCreationPageInputsProps) {
   const subjectsData = [
     { value: "Matemática", label: "Matemática" },
@@ -188,9 +186,7 @@ export function UserProfileCreationPageInputs({
 
       <Center mt="xl">
         <Button
-          onClick={() =>
-            handleButtonClick(userPhoto, loggedUser, user, fileError)
-          }
+          onClick={() => handleButtonClick(userPhoto, user, fileError)}
           disabled={!isFormValid}
         >
           Submit
