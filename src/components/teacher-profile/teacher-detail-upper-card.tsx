@@ -1,7 +1,7 @@
 import { User } from "@/types";
 import { Avatar, Badge, Card, Image, Text, Title } from "@mantine/core";
 
-export function UserDetailCard({ user }: { user: User | null }) {
+export function TeacherDetailUpperCard({ user }: { user: User | null }) {
   if (!user) {
     return null; // Render nothing if user is null
   }

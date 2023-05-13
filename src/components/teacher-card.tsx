@@ -1,5 +1,5 @@
 import { User } from "@/types";
-import { Avatar, Badge, Button, Paper, Text } from "@mantine/core";
+import { Avatar, Badge, Button, Center, Paper, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 
 export function TeacherCard({ user }: { user: User }) {
@@ -8,7 +8,7 @@ export function TeacherCard({ user }: { user: User }) {
   function handleClickDetail(e: { preventDefault: () => void }) {
     e.preventDefault();
     router.push({
-      pathname: "/user-detail",
+      pathname: "/teacher-profile",
       query: { data: JSON.stringify(user) },
     });
   }
@@ -32,11 +32,13 @@ export function TeacherCard({ user }: { user: User }) {
       <Text ta="center" c="dimmed" fz="sm">
         {user.university} • {user.course}
       </Text>
-      {user.subjects.map((subject, index) => (
-        <Badge key={index} size="md" mt="md">
-          {subject}
-        </Badge>
-      ))}
+      <Center>
+        {user.subjects.map((subject, index) => (
+          <Badge key={index} size="md" mt="md">
+            {subject}
+          </Badge>
+        ))}
+      </Center>
       <Text ta="center" mt="sm" fz="md" fw="bold">
         R${user.money}/hr
       </Text>
