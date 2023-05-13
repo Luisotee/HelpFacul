@@ -22,8 +22,6 @@ export async function getDataFromAllUserProfile() {
   const db = getFirestore(app);
   const usersRef = collection(db, "users");
   const snapshot = await getDocs(usersRef);
-  //snapshot.forEach((doc) => {
-  // console.log(doc.id, "=>", doc.data());
-  //});
+
   return snapshot;
 }

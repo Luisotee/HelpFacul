@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { TeacherDetailBottomCard } from "@/components/teacher-profile/teacher-detail-bottom-card";
+import { TeacherDetailUpperCard } from "@/components/teacher-profile/teacher-detail-upper-card";
 import { TopBar } from "@/components/topbar/top-bar";
-import { UserDescriptionCard } from "@/components/user-description-card";
-import { UserDetailCard } from "@/components/user-detail-card";
 import { User } from "@/types";
 import { Center, Stack } from "@mantine/core";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function UserDetail() {
   const router = useRouter();
@@ -23,8 +23,8 @@ export default function UserDetail() {
       <TopBar />
       <Center>
         <Stack w={864}>
-          <UserDetailCard user={user} />
-          <UserDescriptionCard user={user} />
+          <TeacherDetailUpperCard user={user} />
+          <TeacherDetailBottomCard user={user} />
         </Stack>
       </Center>
     </>
