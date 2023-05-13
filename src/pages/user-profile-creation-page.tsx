@@ -1,13 +1,13 @@
 import { TopBar } from "@/components/topbar/top-bar";
 import { fetchUser } from "@/components/user-profile-creation-page-helpers/fetch-user";
 import { UserProfileCreationPageInputs } from "@/components/user-profile-creation-page-helpers/user-profile-creation-page-inputs";
+import isLogged from "@/controller/isLogged";
 import { Center, Paper } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function UserProfileCreationPage() {
   const [userPhoto, setUserPhoto] = useState<File | null>(null);
-  const [loggedUser, setLoggedUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [fileError, setFileError] = useState("");
   const router = useRouter();
@@ -22,6 +22,7 @@ export default function UserProfileCreationPage() {
     subjects: [] as string[],
     money: 0,
     photoUrl: "",
+    uid: "",
   });
   const [valid, setValid] = useState([
     false,
@@ -34,6 +35,10 @@ export default function UserProfileCreationPage() {
     false,
     false,
   ]);
+
+  useEffect(() => {
+    fetchUser(setLoading, setUser);
+  }, []);
 
   useEffect(() => {
     const isValid = [
@@ -52,14 +57,10 @@ export default function UserProfileCreationPage() {
   }, [user, userPhoto]);
 
   useEffect(() => {
-    fetchUser({ setLoggedUser, setLoading });
-  }, []);
-
-  useEffect(() => {
-    if (!loading && !loggedUser) {
+    if (!loading && !isLogged()) {
       router.push("/error-page");
     }
-  }, [loading, loggedUser, router]);
+  }, [loading, router]);
 
   const isFormValid = valid.every((isValid) => isValid);
 
@@ -77,7 +78,6 @@ export default function UserProfileCreationPage() {
             setFileError={setFileError}
             valid={valid}
             isFormValid={isFormValid}
-            loggedUser={loggedUser}
           />
         </Paper>
       </Center>

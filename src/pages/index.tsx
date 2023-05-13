@@ -13,11 +13,12 @@ export default function Home() {
       const snapshot = await getDataFromAllUserProfile();
       const usersData = snapshot.docs.map((doc) => doc.data() as User);
       setUsers(usersData);
-      console.log(usersData);
     };
 
     fetchUsers();
   }, []);
+
+  console.log(users);
 
   return (
     <>
@@ -25,8 +26,8 @@ export default function Home() {
       <Group p="xl" mx="xl" w="90%" spacing="xl">
         {users.map((user) => (
           <TeacherCard
-            key={user.uid} // Assuming each user has a unique "id" property
-            user={user}
+            key={user.uid} // Assuming each user has a unique "uid" property
+            {...user} // Spread the user object to pass its properties as individual props
           />
         ))}
       </Group>
