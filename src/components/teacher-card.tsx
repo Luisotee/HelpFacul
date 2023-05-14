@@ -28,7 +28,7 @@ export function TeacherCard(user: User) {
       })}
       style={{ borderColor: "lightgray" }}
     >
-      <Avatar src="" size={140} radius={120} mx="auto" />
+      <Avatar src={user.photoUrl} size={140} radius={120} mx="auto" />
       <Text ta="center" fz="xl" weight={500} mt="md">
         {user.name}
       </Text>

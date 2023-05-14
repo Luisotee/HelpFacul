@@ -7,6 +7,7 @@ export async function handleImgInput(
   setFileError("");
   if (file && file.size > MAX_FILE_SIZE) {
     setFileError("File size exceeds the limit of 1MB");
+    alert(`Tamanho da imagem supera o limite de 1MB`);
     return;
   }
 
@@ -19,6 +20,9 @@ export async function handleImgInput(
         if (image.width > MAX_DIMENSION || image.height > MAX_DIMENSION) {
           setFileError(
             `Image dimensions exceed the limit of ${MAX_DIMENSION}x${MAX_DIMENSION}`
+          );
+          alert(
+            `Tamanho da imagem supera o limite de ${MAX_DIMENSION}x${MAX_DIMENSION}`
           );
         } else {
           resolve();
