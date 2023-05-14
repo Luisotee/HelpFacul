@@ -10,10 +10,14 @@ export async function fetchUser(
   setLoading(false);
   try {
     if (uid) {
-      const userData = await getDataFromUserProfile(
-        "DCi7x9YzWNMFPu29u1DEfVXWkV52"
-      );
-      setUser((prevUser) => ({ ...prevUser, uid: uid, ...userData }));
+      const userData = await getDataFromUserProfile(uid);
+      if (userData) {
+        console.log("User data:", userData);
+        setUser((prevUser) => ({ ...prevUser, uid: uid, ...userData }));
+      } else {
+        console.log("User not found");
+        setUser((prevUser) => ({ ...prevUser, uid: uid || "" }));
+      }
     }
   } catch (error) {
     console.error("Error fetching user data:", error);

@@ -12,20 +12,29 @@ import {
 import app from "./firebase";
 
 // Function to insert user data into Firestore collection
-export function addUserToFirestore(userInfo) {
-  return new Promise((resolve, reject) => {
+export async function addUserToFirestore(userInfo) {
+  console.log(userInfo);
+  try {
     const db = getFirestore(app);
     const usersCollection = collection(db, "users");
 
+    // Delete any existing profile with the same UID
+    const querySnapshot = await getDocs(
+      query(usersCollection, where("uid", "==", userInfo.uid))
+    );
+
+    if (!querySnapshot.empty) {
+      const userDoc = querySnapshot.docs[0].ref;
+      await deleteDoc(userDoc);
+      console.log("Existing user profile deleted successfully");
+    }
+
     // Add user document to Firestore
-    addDoc(usersCollection, userInfo)
-      .then((docRef) => {
-        resolve(docRef.id); // Resolve with the ID of the newly created document
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+    const newDocRef = await addDoc(usersCollection, userInfo);
+    return newDocRef.id; // Resolve with the ID of the newly created document
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getDataFromAllUserProfile() {
@@ -46,7 +55,8 @@ export async function getDataFromUserProfile(userId) {
     const userData = querySnapshot.docs[0].data();
     return userData;
   } else {
-    throw new Error("User not found");
+    console.log("User not found");
+    return null;
   }
 }
 
