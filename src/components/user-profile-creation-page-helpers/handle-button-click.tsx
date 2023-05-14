@@ -1,10 +1,12 @@
 import { addUserToFirestore } from "@/controller/firestore";
 import { uploadFileToStorage } from "@/controller/firebase-storage";
 import { handleImgInput } from "./handle-img-input";
+import { use } from "react";
+import { User } from "@/types";
 
 export async function handleButtonClick(
   userPhoto: File | null,
-  user: any,
+  user: User,
   fileError: string
 ) {
   async function sendUserToFirestore() {
@@ -15,7 +17,13 @@ export async function handleButtonClick(
     }
 
     if (userPhoto && user.uid) {
-      url = await uploadFileToStorage(user.uid, userPhoto);
+      try {
+        url = await uploadFileToStorage(user.uid, userPhoto);
+        console.log("File uploaded successfully. URL:", url);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        // Handle the error case
+      }
     }
 
     const userToSend = {

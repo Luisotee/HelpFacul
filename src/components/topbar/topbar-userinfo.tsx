@@ -1,3 +1,4 @@
+import { deleteProfile } from "@/controller/firestore";
 import isLogged from "@/controller/isLogged";
 import { Avatar, Button, Group, Menu } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
@@ -27,6 +28,11 @@ export function TopBarUserInfo({ classes, theme }: any) {
   function handleClickSignup(e: { preventDefault: () => void }) {
     e.preventDefault();
     router.push("/signup-page");
+  }
+
+  function handleDeleteProfile(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    deleteProfile(user);
   }
 
   return (
@@ -60,7 +66,11 @@ export function TopBarUserInfo({ classes, theme }: any) {
             <Menu.Item icon={<Logout size={14} />}>Log out</Menu.Item>
             <Menu.Divider />
             <Menu.Label>Zona de perigo</Menu.Label>
-            <Menu.Item color="red" icon={<IconTrash size={14} />}>
+            <Menu.Item
+              color="red"
+              icon={<IconTrash size={14} />}
+              onClick={handleDeleteProfile}
+            >
               Excluir conta
             </Menu.Item>
           </Menu.Dropdown>

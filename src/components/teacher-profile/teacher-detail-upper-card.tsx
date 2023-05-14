@@ -19,7 +19,7 @@ export function TeacherDetailUpperCard({ user }: { user: User | null }) {
 
           <Avatar
             radius={60}
-            src="https://avatars.githubusercontent.com/u/50471205?v=4"
+            src={user.photoUrl}
             size={128}
             style={{ position: "absolute", bottom: -50, left: 15 }}
           />
