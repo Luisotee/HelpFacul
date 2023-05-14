@@ -7,6 +7,7 @@ import {
   doc,
   query,
   where,
+  deleteDoc,
 } from "firebase/firestore";
 import app from "./firebase";
 
@@ -46,5 +47,24 @@ export async function getDataFromUserProfile(userId) {
     return userData;
   } else {
     throw new Error("User not found");
+  }
+}
+
+export async function deleteProfile(uid) {
+  const db = getFirestore(app);
+  const usersRef = collection(db, "users");
+  const querySnapshot = await getDocs(query(usersRef, where("uid", "==", uid)));
+
+  if (!querySnapshot.empty) {
+    const userDoc = querySnapshot.docs[0].ref;
+
+    try {
+      await deleteDoc(userDoc);
+      console.log("User profile deleted successfully");
+    } catch (error) {
+      console.error("Error deleting user profile:", error);
+    }
+  } else {
+    console.error("User not found");
   }
 }
