@@ -1,4 +1,4 @@
-import { deleteProfile } from "@/controller/firestore";
+import { deleteProfile, logout } from "@/controller/firestore";
 import isLogged from "@/controller/isLogged";
 import { Avatar, Button, Group, Menu } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
@@ -63,7 +63,9 @@ export function TopBarUserInfo({ classes, theme }: any) {
             >
               Editar anúncio
             </Menu.Item>
-            <Menu.Item icon={<Logout size={14} />}>Log out</Menu.Item>
+            <Menu.Item icon={<Logout size={14} />} onClick={logout}>
+              Logout
+            </Menu.Item>
             <Menu.Divider />
             <Menu.Label>Zona de perigo</Menu.Label>
             <Menu.Item
