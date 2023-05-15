@@ -10,6 +10,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import app from "./firebase";
+import { getAuth, signOut } from "firebase/auth";
 
 // Function to insert user data into Firestore collection
 export async function addUserToFirestore(userInfo) {
@@ -77,4 +78,18 @@ export async function deleteProfile(uid) {
   } else {
     console.error("User not found");
   }
+}
+
+export function logout() {
+  const auth = getAuth();
+  signOut(auth)
+    .then(() => {
+      console.log("Sign-out successful");
+      // Sign-out successful.
+      window.location.reload();
+    })
+    .catch((error) => {
+      // An error happened.
+      console.log(error);
+    });
 }
