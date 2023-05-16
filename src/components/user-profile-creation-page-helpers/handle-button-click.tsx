@@ -31,6 +31,8 @@ export async function handleButtonClick(
 
     try {
       const documentId = await addUserToFirestore(userToSend);
+      // Redirect the user to the home page
+      window.location.href = "/";
     } catch (error) {
       console.error("Error adding user to Firestore:", error);
     }
