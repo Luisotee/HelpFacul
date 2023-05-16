@@ -9,11 +9,12 @@ import {
 } from "@mantine/core";
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   sendEmailVerification,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import { auth } from "@/controller/firebase";
+import { auth, secondaryApp } from "@/controller/firebase";
 import isLogged from "@/controller/isLogged";
 import { useRouter } from "next/router";
 
@@ -59,22 +60,25 @@ export default function SignupPage() {
   }
 
   async function onSubmit() {
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-        await sendEmailVerification(userCredential.user);
-        const user = userCredential.user;
-        //console.log(user);
-        alert(
-          "Cadastro concluido! Verifique seu email e faça o login na nova página."
-        );
-        router.push("/login-page");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        //console.log(errorCode, errorMessage);
-        alert(errorCode);
-      });
+    try {
+      const secondaryAuth = getAuth(secondaryApp);
+      const userCredential = await createUserWithEmailAndPassword(
+        secondaryAuth,
+        email,
+        password
+      );
+      await sendEmailVerification(userCredential.user);
+      alert(
+        "Cadastro concluído! Verifique seu email e faça o login na nova página."
+      );
+      secondaryAuth.signOut();
+      router.push("/login-page");
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+      alert(errorCode);
+    }
   }
 
   const isFormValid = isValidEmail && isValidPassword && isValidConfirmPassword;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { TopBar } from "@/components/topbar/top-bar";
 import { Group } from "@mantine/core";
-import { getDataFromAllUserProfile } from "@/controller/firestore";
+import { getDataFromAllUserProfile } from "@/controller/firestore.js";
 import { TeacherCard } from "@/components/teacher-card";
 import { User } from "@/types";
 
@@ -17,8 +17,6 @@ export default function Home() {
 
     fetchUsers();
   }, []);
-
-  console.log(users);
 
   return (
     <>

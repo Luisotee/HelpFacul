@@ -1,15 +1,14 @@
-import { deleteProfile, logout } from "@/controller/firestore";
+import { deleteProfile, deleteUser, logout } from "@/controller/firestore.js";
 import isLogged from "@/controller/isLogged";
 import { Avatar, Button, Group, Menu } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Ad2, Edit, Logout, User } from "tabler-icons-react";
+import { Ad2, Edit, Logout, User, UserOff } from "tabler-icons-react";
 
 export function TopBarUserInfo({ classes, theme }: any) {
   const router = useRouter();
   const [user, setUser] = useState(null);
-  //console.log("TOPBAR USER: " + JSON.stringify(user));
 
   useEffect(() => {
     async function fetchUser() {
@@ -35,6 +34,15 @@ export function TopBarUserInfo({ classes, theme }: any) {
     deleteProfile(user);
   }
 
+  function handleDeleteUser(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    if (user != null) {
+      deleteUser();
+    } else {
+      alert("Erro! Tente novamente mais tarde.");
+    }
+  }
+
   return (
     <>
       {user ? (
@@ -54,14 +62,14 @@ export function TopBarUserInfo({ classes, theme }: any) {
               href="/user-profile-creation-page"
               icon={<Ad2 size={14} />}
             >
-              Criar anúncio
+              Criar perfil
             </Menu.Item>
             <Menu.Item
               component="a"
               href="/user-profile-creation-page"
               icon={<Edit size={14} />}
             >
-              Editar anúncio
+              Editar perfil
             </Menu.Item>
             <Menu.Item icon={<Logout size={14} />} onClick={logout}>
               Logout
@@ -70,8 +78,15 @@ export function TopBarUserInfo({ classes, theme }: any) {
             <Menu.Label>Zona de perigo</Menu.Label>
             <Menu.Item
               color="red"
-              icon={<IconTrash size={14} />}
+              icon={<UserOff size={14} />}
               onClick={handleDeleteProfile}
+            >
+              Excluir perfil
+            </Menu.Item>
+            <Menu.Item
+              color="red"
+              icon={<IconTrash size={14} />}
+              onClick={handleDeleteUser}
             >
               Excluir conta
             </Menu.Item>
