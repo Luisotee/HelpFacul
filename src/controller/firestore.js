@@ -10,11 +10,10 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import app from "./firebase";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, deleteUser as deleteAuthUser } from "firebase/auth";
 
 // Function to insert user data into Firestore collection
 export async function addUserToFirestore(userInfo) {
-  console.log(userInfo);
   try {
     const db = getFirestore(app);
     const usersCollection = collection(db, "users");
@@ -27,7 +26,6 @@ export async function addUserToFirestore(userInfo) {
     if (!querySnapshot.empty) {
       const userDoc = querySnapshot.docs[0].ref;
       await deleteDoc(userDoc);
-      console.log("Existing user profile deleted successfully");
     }
 
     // Add user document to Firestore
@@ -71,7 +69,6 @@ export async function deleteProfile(uid) {
 
     try {
       await deleteDoc(userDoc);
-      console.log("User profile deleted successfully");
     } catch (error) {
       console.error("Error deleting user profile:", error);
     }
@@ -92,4 +89,26 @@ export function logout() {
       // An error happened.
       console.log(error);
     });
+}
+
+export async function deleteUser() {
+  try {
+    // Delete user authentication
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    // Delete user profile before deleting account
+    deleteProfile(user.uid);
+
+    // Delete the user account
+    await deleteAuthUser(user);
+    console.log("User authentication deleted successfully");
+
+    // Refresh the page or perform any other necessary actions
+    window.location.reload();
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    logout();
+    window.location.href = "/login-page";
+  }
 }

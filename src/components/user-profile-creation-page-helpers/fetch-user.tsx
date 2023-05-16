@@ -1,4 +1,4 @@
-import { getDataFromUserProfile } from "@/controller/firestore";
+import { getDataFromUserProfile } from "@/controller/firestore.js";
 import isLogged from "@/controller/isLogged";
 import { User } from "@/types";
 
@@ -12,10 +12,8 @@ export async function fetchUser(
     if (uid) {
       const userData = await getDataFromUserProfile(uid);
       if (userData) {
-        console.log("User data:", userData);
         setUser((prevUser) => ({ ...prevUser, uid: uid, ...userData }));
       } else {
-        console.log("User not found");
         setUser((prevUser) => ({ ...prevUser, uid: uid || "" }));
       }
     }

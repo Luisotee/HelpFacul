@@ -27,8 +27,8 @@ export default function LoginPage() {
 
   useEffect(() => {
     async function checkUserLoggedIn() {
-      const isUser = await isLogged();
-      if (isUser) {
+      const uid = await isLogged();
+      if (uid) {
         console.log("User is already logged in!");
         router.push("/");
       }
@@ -58,24 +58,26 @@ export default function LoginPage() {
     router.push("/signup-page");
   }
 
-  function onSubmit() {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        const stringifiedUser = JSON.stringify(user);
-        if (user.emailVerified) {
-          console.log(user);
-          router.push("/");
-        } else {
-          alert("Please verify your email before logging in.");
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        //console.log(errorCode, errorMessage);
-        alert(errorCode);
-      });
+  async function onSubmit() {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      if (user.emailVerified) {
+        router.push("/");
+      } else {
+        alert("Please verify your email before logging in.");
+      }
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+      alert(errorCode);
+    }
   }
 
   return (
