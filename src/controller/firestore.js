@@ -1,16 +1,19 @@
 import {
-  getFirestore,
-  collection,
+  deleteUser as deleteAuthUser,
+  getAuth,
+  sendPasswordResetEmail,
+  signOut,
+} from "firebase/auth";
+import {
   addDoc,
+  collection,
+  deleteDoc,
   getDocs,
-  getDoc,
-  doc,
+  getFirestore,
   query,
   where,
-  deleteDoc,
 } from "firebase/firestore";
 import app from "./firebase";
-import { getAuth, signOut, deleteUser as deleteAuthUser } from "firebase/auth";
 
 // Function to insert user data into Firestore collection
 export async function addUserToFirestore(userInfo) {
@@ -69,6 +72,7 @@ export async function deleteProfile(uid) {
 
     try {
       await deleteDoc(userDoc);
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting user profile:", error);
     }
@@ -110,5 +114,17 @@ export async function deleteUser() {
     console.error("Error deleting user:", error);
     logout();
     window.location.href = "/login-page";
+  }
+}
+
+export async function recoverPassword(email) {
+  try {
+    const auth = getAuth();
+    await sendPasswordResetEmail(auth, email);
+    console.log("Password reset email sent successfully");
+    window.location.href = "/login-page";
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
+    alert("Erro: Email não existe!");
   }
 }

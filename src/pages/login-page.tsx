@@ -58,6 +58,11 @@ export default function LoginPage() {
     router.push("/signup-page");
   }
 
+  function handleClickRecover(e: { preventDefault: () => void }) {
+    e.preventDefault();
+    router.push("/password-recover");
+  }
+
   async function onSubmit() {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -124,7 +129,7 @@ export default function LoginPage() {
             mt="md"
           />
           <Group position="apart" mt="lg">
-            <Anchor component="button" size="sm">
+            <Anchor component="button" size="sm" onClick={handleClickRecover}>
               Esqueceu sua senha?
             </Anchor>
           </Group>
