@@ -13,7 +13,7 @@ import { IconUpload } from "@tabler/icons-react";
 import { handleButtonClick } from "./handle-button-click";
 
 const MAX_FILE_SIZE = 1024 * 1024; // 1MB
-const MAX_DIMENSION = 460;
+const MAX_DIMENSION = 10000;
 
 type UserProfileCreationPageInputsProps = {
   user: User;

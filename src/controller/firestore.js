@@ -128,3 +128,18 @@ export async function recoverPassword(email) {
     alert("Erro: Email não existe!");
   }
 }
+
+export async function getDataFromUserWithSubject(subject) {
+  const db = getFirestore(app);
+  const usersRef = collection(db, "users");
+  const q = query(usersRef, where("subjects", "array-contains", subject));
+  const snapshot = await getDocs(q);
+
+  const users = [];
+  snapshot.forEach((doc) => {
+    const userData = doc.data();
+    users.push(userData);
+  });
+
+  return users;
+}
