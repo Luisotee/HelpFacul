@@ -9,7 +9,6 @@ import {
   SimpleGrid,
   Text,
   ThemeIcon,
-  UnstyledButton,
   rem,
 } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";

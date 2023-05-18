@@ -1,5 +1,5 @@
 import { User } from "@/types";
-import { Avatar, Badge, Button, Center, Paper, Text } from "@mantine/core";
+import { Avatar, Badge, Button, Group, Paper, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 
 export function TeacherCard(user: User) {
@@ -20,6 +20,7 @@ export function TeacherCard(user: User) {
       key={user.uid} // Assign key prop to the Paper component
       radius="lg"
       w={330}
+      h={450}
       withBorder
       p="lg"
       sx={(theme) => ({
@@ -35,13 +36,19 @@ export function TeacherCard(user: User) {
       <Text ta="center" c="dimmed" fz="sm">
         {user.university} • {user.course}
       </Text>
-      <Center>
+      <div style={{ width: 288, height: 110 }}>
         {subjects.map((subject, index) => (
-          <Badge key={index} size="md" mt="md">
+          <Badge
+            key={index}
+            size="md"
+            mt="md"
+            style={{ overflowWrap: "break-word" }}
+          >
             {subject}
           </Badge>
         ))}
-      </Center>
+      </div>
+
       <Text ta="center" mt="sm" fz="md" fw="bold">
         R${user.money}/hr
       </Text>
