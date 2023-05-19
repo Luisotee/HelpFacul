@@ -37,8 +37,18 @@ export default function UserProfileCreationPage() {
   ]);
 
   useEffect(() => {
-    fetchUser(setLoading, setUser);
-  }, []);
+    const checkUser = async () => {
+      let uid = await isLogged();
+      if (!uid) {
+        router.push("/"); // Redirect to the home page
+        return;
+      }
+
+      fetchUser(setLoading, setUser);
+    };
+
+    checkUser();
+  }, [router]);
 
   useEffect(() => {
     const isValid = [
