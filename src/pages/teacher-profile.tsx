@@ -11,13 +11,6 @@ export default function UserDetail() {
   const { data } = router.query;
   const user: User | null = data ? JSON.parse(data as string) : null;
 
-  useEffect(() => {
-    if (!user) {
-      // User information is incomplete, redirect to the error page
-      window.location.href = "/error-page";
-    }
-  }, [user]);
-
   return (
     <>
       <TopBar />
