@@ -21,13 +21,13 @@ export function TeacherCard(user: User) {
       radius="lg"
       w={330}
       h={450}
-      withBorder
+      shadow="xl"
       p="lg"
       sx={(theme) => ({
         backgroundColor:
           theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
       })}
-      style={{ borderColor: "lightgray" }}
+      withBorder
     >
       <Avatar src={user.photoUrl} size={140} radius={120} mx="auto" />
       <Text ta="center" fz="xl" weight={500} mt="md">
