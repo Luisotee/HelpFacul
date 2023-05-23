@@ -31,13 +31,23 @@ export function TopBarUserInfo({ classes, theme }: any) {
 
   function handleDeleteProfile(e: { preventDefault: () => void }) {
     e.preventDefault();
-    deleteProfile(user);
+    const confirmed = window.confirm(
+      "Você tem certeza que quer excluir seu perfil?"
+    );
+    if (confirmed) {
+      deleteProfile(user);
+    }
   }
 
   function handleDeleteUser(e: { preventDefault: () => void }) {
     e.preventDefault();
     if (user != null) {
-      deleteUser();
+      const confirmed = window.confirm(
+        "Você tem certeza que quer excluir sua conta?"
+      );
+      if (confirmed) {
+        deleteUser();
+      }
     } else {
       alert("Erro! Tente novamente mais tarde.");
     }
